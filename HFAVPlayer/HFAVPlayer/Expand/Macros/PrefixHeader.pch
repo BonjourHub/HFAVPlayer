@@ -1,0 +1,24 @@
+//
+//  PrefixHeader.pch
+//  HFAVPlayer
+//
+//  Created by 程鹏飞 on 2018/6/24.
+//  Copyright © 2018年 pengfei. All rights reserved.
+//
+
+#ifndef PrefixHeader_pch
+#define PrefixHeader_pch
+
+// Include any system framework and library headers here that should be included in all compilation units.
+// You will also need to set the Prefix Header build setting of one or more of your targets to reference this file.
+
+#ifdef DEBUG
+#define HFDebugLog(format,...) NSLog(@"%s Log:%@",__func__,[NSString stringWithFormat:format, ##__VA_ARGS__])
+#define HFTODODebugLog(format,...) NSLog(@"%s 🔵Todo:%@",__func__,[NSString stringWithFormat:format, ##__VA_ARGS__])
+#else
+#define HFDebugLog(...) do { \
+} while(0)
+#define HFTODODebugLog(...) do { \
+} while(0)
+
+#endif /* PrefixHeader_pch */
