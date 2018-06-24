@@ -6,6 +6,5 @@ target 'HFAVPlayer' do
   # use_frameworks!
 
   # Pods for HFAVPlayer
-  pod 'FFmpeg', '2.8.3'
 
 end
