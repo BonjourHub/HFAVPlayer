@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		1FB33D9120E09E0B00658543 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FB33D9020E09E0B00658543 /* AVFoundation.framework */; };
 		1FB33D9320E09E2E00658543 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FB33D9220E09E2E00658543 /* CoreMedia.framework */; };
+		1FB33D9720E0C2B400658543 /* test.flv in Resources */ = {isa = PBXBuildFile; fileRef = 1FB33D9620E0C2B400658543 /* test.flv */; };
 		2CD0B4481785A1DF4D8E9DB4 /* libPods-HFAVPlayer.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C5D6D38729038D51D66C2B83 /* libPods-HFAVPlayer.a */; };
 		D19DE92220DE04140079532A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = D19DE92120DE04140079532A /* AppDelegate.m */; };
 		D19DE92520DE04140079532A /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D19DE92420DE04140079532A /* ViewController.m */; };
@@ -23,6 +24,7 @@
 		1FB33D9020E09E0B00658543 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		1FB33D9220E09E2E00658543 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
 		1FB33D9420E0A1F800658543 /* HFPrefixHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HFPrefixHeader.pch; sourceTree = "<group>"; };
+		1FB33D9620E0C2B400658543 /* test.flv */ = {isa = PBXFileReference; lastKnownFileType = file; path = test.flv; sourceTree = "<group>"; };
 		BEC4C9516A92E488CD6C95DF /* Pods-HFAVPlayer.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HFAVPlayer.release.xcconfig"; path = "Pods/Target Support Files/Pods-HFAVPlayer/Pods-HFAVPlayer.release.xcconfig"; sourceTree = "<group>"; };
 		C5D6D38729038D51D66C2B83 /* libPods-HFAVPlayer.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-HFAVPlayer.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C745CA1426D7C63E940958BB /* Pods-HFAVPlayer.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HFAVPlayer.debug.xcconfig"; path = "Pods/Target Support Files/Pods-HFAVPlayer/Pods-HFAVPlayer.debug.xcconfig"; sourceTree = "<group>"; };
@@ -63,6 +65,14 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		1FB33D9520E0C27B00658543 /* Resource */ = {
+			isa = PBXGroup;
+			children = (
+				1FB33D9620E0C2B400658543 /* test.flv */,
+			);
+			path = Resource;
+			sourceTree = "<group>";
+		};
 		9A81346A2960ACE5A03D0F0C /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -75,6 +85,7 @@
 		D19DE91420DE04140079532A = {
 			isa = PBXGroup;
 			children = (
+				1FB33D9520E0C27B00658543 /* Resource */,
 				D19DE91F20DE04140079532A /* HFAVPlayer */,
 				D19DE91E20DE04140079532A /* Products */,
 				9A81346A2960ACE5A03D0F0C /* Pods */,
@@ -196,6 +207,7 @@
 				D19DE92D20DE04140079532A /* LaunchScreen.storyboard in Resources */,
 				D19DE92A20DE04140079532A /* Assets.xcassets in Resources */,
 				D19DE93B20DFD9A50079532A /* README.md in Resources */,
+				1FB33D9720E0C2B400658543 /* test.flv in Resources */,
 				D19DE92820DE04140079532A /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
