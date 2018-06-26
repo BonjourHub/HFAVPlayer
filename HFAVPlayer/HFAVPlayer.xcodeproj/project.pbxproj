@@ -10,6 +10,8 @@
 		1FB33D9120E09E0B00658543 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FB33D9020E09E0B00658543 /* AVFoundation.framework */; };
 		1FB33D9320E09E2E00658543 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FB33D9220E09E2E00658543 /* CoreMedia.framework */; };
 		1FB33D9720E0C2B400658543 /* test.flv in Resources */ = {isa = PBXBuildFile; fileRef = 1FB33D9620E0C2B400658543 /* test.flv */; };
+		1FCEF13220E22375004A8378 /* HFAVPlayerDecoder.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FCEF13120E22375004A8378 /* HFAVPlayerDecoder.m */; };
+		1FCEF13620E23C21004A8378 /* HFAVPlayerMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FCEF13520E23C21004A8378 /* HFAVPlayerMessage.m */; };
 		2CD0B4481785A1DF4D8E9DB4 /* libPods-HFAVPlayer.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C5D6D38729038D51D66C2B83 /* libPods-HFAVPlayer.a */; };
 		D19DE92220DE04140079532A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = D19DE92120DE04140079532A /* AppDelegate.m */; };
 		D19DE92520DE04140079532A /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D19DE92420DE04140079532A /* ViewController.m */; };
@@ -25,6 +27,11 @@
 		1FB33D9220E09E2E00658543 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
 		1FB33D9420E0A1F800658543 /* HFPrefixHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HFPrefixHeader.pch; sourceTree = "<group>"; };
 		1FB33D9620E0C2B400658543 /* test.flv */ = {isa = PBXFileReference; lastKnownFileType = file; path = test.flv; sourceTree = "<group>"; };
+		1FCEF13020E22375004A8378 /* HFAVPlayerDecoder.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HFAVPlayerDecoder.h; sourceTree = "<group>"; };
+		1FCEF13120E22375004A8378 /* HFAVPlayerDecoder.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HFAVPlayerDecoder.m; sourceTree = "<group>"; };
+		1FCEF13420E23C21004A8378 /* HFAVPlayerMessage.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HFAVPlayerMessage.h; sourceTree = "<group>"; };
+		1FCEF13520E23C21004A8378 /* HFAVPlayerMessage.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HFAVPlayerMessage.m; sourceTree = "<group>"; };
+		1FCEF13920E23E54004A8378 /* HFAVPlayerEnum.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HFAVPlayerEnum.h; sourceTree = "<group>"; };
 		BEC4C9516A92E488CD6C95DF /* Pods-HFAVPlayer.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HFAVPlayer.release.xcconfig"; path = "Pods/Target Support Files/Pods-HFAVPlayer/Pods-HFAVPlayer.release.xcconfig"; sourceTree = "<group>"; };
 		C5D6D38729038D51D66C2B83 /* libPods-HFAVPlayer.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-HFAVPlayer.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C745CA1426D7C63E940958BB /* Pods-HFAVPlayer.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HFAVPlayer.debug.xcconfig"; path = "Pods/Target Support Files/Pods-HFAVPlayer/Pods-HFAVPlayer.debug.xcconfig"; sourceTree = "<group>"; };
@@ -73,6 +80,25 @@
 			path = Resource;
 			sourceTree = "<group>";
 		};
+		1FCEF12F20E2230E004A8378 /* Decoder */ = {
+			isa = PBXGroup;
+			children = (
+				1FCEF13020E22375004A8378 /* HFAVPlayerDecoder.h */,
+				1FCEF13120E22375004A8378 /* HFAVPlayerDecoder.m */,
+			);
+			path = Decoder;
+			sourceTree = "<group>";
+		};
+		1FCEF13320E23BBD004A8378 /* Utility */ = {
+			isa = PBXGroup;
+			children = (
+				1FCEF13420E23C21004A8378 /* HFAVPlayerMessage.h */,
+				1FCEF13520E23C21004A8378 /* HFAVPlayerMessage.m */,
+				1FCEF13920E23E54004A8378 /* HFAVPlayerEnum.h */,
+			);
+			path = Utility;
+			sourceTree = "<group>";
+		};
 		9A81346A2960ACE5A03D0F0C /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -108,6 +134,8 @@
 				D19DE92120DE04140079532A /* AppDelegate.m */,
 				D19DE92320DE04140079532A /* ViewController.h */,
 				D19DE92420DE04140079532A /* ViewController.m */,
+				1FCEF13320E23BBD004A8378 /* Utility */,
+				1FCEF12F20E2230E004A8378 /* Decoder */,
 				D19DE93620DFD8FA0079532A /* Expand */,
 				D19DE92620DE04140079532A /* Main.storyboard */,
 				D19DE92920DE04140079532A /* Assets.xcassets */,
@@ -268,7 +296,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				D19DE92520DE04140079532A /* ViewController.m in Sources */,
+				1FCEF13620E23C21004A8378 /* HFAVPlayerMessage.m in Sources */,
 				D19DE93020DE04140079532A /* main.m in Sources */,
+				1FCEF13220E22375004A8378 /* HFAVPlayerDecoder.m in Sources */,
 				D19DE92220DE04140079532A /* AppDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
