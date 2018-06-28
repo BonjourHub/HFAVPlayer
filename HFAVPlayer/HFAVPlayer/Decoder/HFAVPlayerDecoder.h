@@ -10,4 +10,6 @@
 
 @interface HFAVPlayerDecoder : NSObject
 
+- (NSMutableArray *)_decodeFrameWithFileName:(NSString *)fileName;
+
 @end

@@ -9,11 +9,25 @@
 #import "HFAVPlayerDecoder.h"
 #import "HFAVPlayerMessage.h"
 #import "HFAVPlayerEnum.h"
+#import "HFAVFrame.h"
 
 #import <libavformat/avformat.h>
 #import <libavcodec/avcodec.h>
 #import <libavutil/imgutils.h>
 #import <libswscale/swscale.h>
+
+static NSData * copyFrameData(UInt8 *src, int linesize, int width, int height)
+{
+    width = MIN(linesize, width);
+    NSMutableData *md = [NSMutableData dataWithLength: width * height];
+    Byte *dst = md.mutableBytes;
+    for (NSUInteger i = 0; i < height; ++i) {
+        memcpy(dst, src, width);
+        dst += width;
+        src += linesize;
+    }
+    return md;
+}
 
 typedef void(^HFAVPlayerDecoderCallBackMessage)(HFAVPlayerMessage *message);
 
@@ -44,6 +58,115 @@ typedef void(^HFAVPlayerDecoderCallBackMessage)(HFAVPlayerMessage *message);
     avformat_network_init();
 }
 
+#pragma mark - New
+- (NSMutableArray *)_decodeFrameWithFileName:(NSString *)fileName
+{
+    AVFormatContext *pformatCtx = NULL;
+    // open file
+    if (avformat_open_input(&pformatCtx, [fileName UTF8String], NULL, NULL) != 0)
+    {
+        HFDebugLog(@"HFD: open file error.");
+        return nil;
+    }
+    
+    // find stream
+    if (avformat_find_stream_info(pformatCtx, NULL) < 0)
+    {
+        HFDebugLog(@"HFD: find stream error.");
+        return nil;
+    }
+    
+    NSInteger videoStreamIndex = -1;
+    // get video stream index
+    for (int i = 0; i < pformatCtx->nb_streams; i++)
+    {
+        if (pformatCtx->streams[i]->codec->codec_type == AVMEDIA_TYPE_VIDEO)
+        {
+            videoStreamIndex = i;
+            break;
+        }
+    }
+    
+    // open codec
+    AVCodecContext *pcodecCtx = pformatCtx->streams[videoStreamIndex]->codec;
+    AVCodec *pcodec = avcodec_find_decoder(pcodecCtx->codec_id);
+    if (pcodec == NULL)
+    {
+        HFDebugLog(@"HFD: could't find decoder.");
+        return nil;
+    }
+    if (avcodec_open2(pcodecCtx, pcodec, NULL) < 0)
+    {
+        HFDebugLog(@"HFD: open decodec failed.");
+        return nil;
+    }
+    
+    // decode
+    AVFrame *pframeRGB = av_frame_alloc();
+    if (pframeRGB == NULL)
+    {
+        HFDebugLog(@"HFAV-DE:frameRGB alloc error.");
+    }
+    
+    //视频帧原始数据
+    int numByte = av_image_get_buffer_size(AV_PIX_FMT_RGB24, pcodecCtx->width, pcodecCtx->height, 1);
+    uint8_t *buffer = av_malloc(numByte * sizeof(uint8_t));
+    av_image_fill_arrays(pframeRGB->data, pframeRGB->linesize, buffer, AV_PIX_FMT_RGB24, pcodecCtx->width, pcodecCtx->height, 1);
+    
+    //读取数据
+    // Initialize SWS context for software scaling.
+    struct SwsContext *swsCtx = sws_getContext(pcodecCtx->width, pcodecCtx->height, pcodecCtx->pix_fmt, pcodecCtx->width, pcodecCtx->height, AV_PIX_FMT_RGB24, SWS_BILINEAR, NULL, NULL, NULL);
+    // Read frames and save first five frames to disk.
+    AVFrame *pframe = av_frame_alloc();
+    AVPacket packet;
+    int frameFinishedPtr;
+    int i = 0;
+    NSMutableArray *frames = [NSMutableArray arrayWithCapacity:0];
+    while (av_read_frame(pformatCtx, &packet) >= 0)
+    {
+        // Is this a packet from the video stream?
+        if (packet.stream_index == _videoStreamIndex)
+        {
+            //Decode video frame
+            avcodec_decode_video2(pcodecCtx, pframe, &frameFinishedPtr, &packet);
+            
+            //Did we get a video frame?
+            if (frameFinishedPtr)
+            {
+                //Convert the image from its native format to RGB.
+                sws_scale(swsCtx, (uint8_t const * const *)pframe->data, pframe->linesize, 0, pcodecCtx->height, pframeRGB->data, pframeRGB->linesize);
+                
+                // get the frame with pframeRGB
+                if (++i > 50)
+                {
+                    @autoreleasepool
+                    {
+                        HFAVFrame *avFrame = [HFAVFrame new];
+                        avFrame.luma = copyFrameData(pframeRGB->data[0], pframeRGB->linesize[0], pcodecCtx->width, pcodecCtx->height);
+                        avFrame.chromaB = copyFrameData(pframeRGB->data[1], pframeRGB->linesize[1], pcodecCtx->width/2, pcodecCtx->height/2);
+                        avFrame.ChromaR = copyFrameData(pframeRGB->data[2], pframeRGB->linesize[2], pcodecCtx->width/2, pcodecCtx->height/2);
+                        
+                        avFrame.width = pcodecCtx->width;
+                        avFrame.height = pcodecCtx->height;
+                        avFrame.linesize = pframeRGB->linesize[0];
+                        
+                        [frames addObject:avFrame];
+                        i = 0;
+                    }
+                }
+            }
+        }
+    }
+    
+    free(buffer);
+    av_frame_free(&pframeRGB);
+    av_frame_free(&pframe);
+    sws_freeContext(swsCtx);
+    
+    return frames;
+}
+
+#pragma mark - Old
 #pragma mark - 打开文件
 - (AVFormatContext *)_openVideoFileWithFileName:(NSString *)fileName
 {

@@ -12,6 +12,7 @@
 		1FB33D9720E0C2B400658543 /* test.flv in Resources */ = {isa = PBXBuildFile; fileRef = 1FB33D9620E0C2B400658543 /* test.flv */; };
 		1FCEF13220E22375004A8378 /* HFAVPlayerDecoder.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FCEF13120E22375004A8378 /* HFAVPlayerDecoder.m */; };
 		1FCEF13620E23C21004A8378 /* HFAVPlayerMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FCEF13520E23C21004A8378 /* HFAVPlayerMessage.m */; };
+		1FCEF13C20E38967004A8378 /* HFAVFrame.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FCEF13B20E38967004A8378 /* HFAVFrame.m */; };
 		2CD0B4481785A1DF4D8E9DB4 /* libPods-HFAVPlayer.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C5D6D38729038D51D66C2B83 /* libPods-HFAVPlayer.a */; };
 		D19DE92220DE04140079532A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = D19DE92120DE04140079532A /* AppDelegate.m */; };
 		D19DE92520DE04140079532A /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D19DE92420DE04140079532A /* ViewController.m */; };
@@ -32,6 +33,8 @@
 		1FCEF13420E23C21004A8378 /* HFAVPlayerMessage.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HFAVPlayerMessage.h; sourceTree = "<group>"; };
 		1FCEF13520E23C21004A8378 /* HFAVPlayerMessage.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HFAVPlayerMessage.m; sourceTree = "<group>"; };
 		1FCEF13920E23E54004A8378 /* HFAVPlayerEnum.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HFAVPlayerEnum.h; sourceTree = "<group>"; };
+		1FCEF13A20E38967004A8378 /* HFAVFrame.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HFAVFrame.h; sourceTree = "<group>"; };
+		1FCEF13B20E38967004A8378 /* HFAVFrame.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HFAVFrame.m; sourceTree = "<group>"; };
 		BEC4C9516A92E488CD6C95DF /* Pods-HFAVPlayer.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HFAVPlayer.release.xcconfig"; path = "Pods/Target Support Files/Pods-HFAVPlayer/Pods-HFAVPlayer.release.xcconfig"; sourceTree = "<group>"; };
 		C5D6D38729038D51D66C2B83 /* libPods-HFAVPlayer.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-HFAVPlayer.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C745CA1426D7C63E940958BB /* Pods-HFAVPlayer.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HFAVPlayer.debug.xcconfig"; path = "Pods/Target Support Files/Pods-HFAVPlayer/Pods-HFAVPlayer.debug.xcconfig"; sourceTree = "<group>"; };
@@ -85,6 +88,8 @@
 			children = (
 				1FCEF13020E22375004A8378 /* HFAVPlayerDecoder.h */,
 				1FCEF13120E22375004A8378 /* HFAVPlayerDecoder.m */,
+				1FCEF13A20E38967004A8378 /* HFAVFrame.h */,
+				1FCEF13B20E38967004A8378 /* HFAVFrame.m */,
 			);
 			path = Decoder;
 			sourceTree = "<group>";
@@ -295,6 +300,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1FCEF13C20E38967004A8378 /* HFAVFrame.m in Sources */,
 				D19DE92520DE04140079532A /* ViewController.m in Sources */,
 				1FCEF13620E23C21004A8378 /* HFAVPlayerMessage.m in Sources */,
 				D19DE93020DE04140079532A /* main.m in Sources */,

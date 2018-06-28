@@ -10,6 +10,8 @@
 
 #import <libavformat/avformat.h>
 
+#import "HFAVPlayerDecoder.h"
+
 @interface ViewController ()
 
 @end
@@ -21,8 +23,14 @@
     // Do any additional setup after loading the view, typically from a nib.
     self.view.backgroundColor = [UIColor grayColor];
     
-    [self decode];
+//    [self decode];
     
+    NSString *filePath = [[NSBundle mainBundle] pathForResource:@"test" ofType:@"flv"];
+    
+    HFAVPlayerDecoder *decoder = [HFAVPlayerDecoder new];
+    NSMutableArray *frames = [decoder _decodeFrameWithFileName:filePath];
+    
+    HFDebugLog(@"frame count:%ld",frames.count);
 }
 
 - (void)decode {
