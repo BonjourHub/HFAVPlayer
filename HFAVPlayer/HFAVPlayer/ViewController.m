@@ -35,6 +35,7 @@
     
     _render = [[HFMetalRender alloc] initMetalRenderWithMetalKitView:_mtkView];
     _mtkView.delegate = _render;
+    _mtkView.preferredFramesPerSecond = 60;
     
 }
 
