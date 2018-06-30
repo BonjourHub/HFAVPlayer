@@ -14,6 +14,7 @@
 		D19DE92A20DE04140079532A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D19DE92920DE04140079532A /* Assets.xcassets */; };
 		D19DE92D20DE04140079532A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D19DE92B20DE04140079532A /* LaunchScreen.storyboard */; };
 		D19DE93020DE04140079532A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = D19DE92F20DE04140079532A /* main.m */; };
+		D1C38BAF20E77B8E00CDA114 /* HFMetalRender.m in Sources */ = {isa = PBXBuildFile; fileRef = D1C38BAE20E77B8E00CDA114 /* HFMetalRender.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +31,10 @@
 		D19DE92C20DE04140079532A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		D19DE92E20DE04140079532A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D19DE92F20DE04140079532A /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		D1C38BAA20E7798200CDA114 /* Metal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Metal.framework; path = System/Library/Frameworks/Metal.framework; sourceTree = SDKROOT; };
+		D1C38BAB20E7799100CDA114 /* MetalKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MetalKit.framework; path = System/Library/Frameworks/MetalKit.framework; sourceTree = SDKROOT; };
+		D1C38BAD20E77B8E00CDA114 /* HFMetalRender.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HFMetalRender.h; sourceTree = "<group>"; };
+		D1C38BAE20E77B8E00CDA114 /* HFMetalRender.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HFMetalRender.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -47,6 +52,8 @@
 		131DA6FDC22C34DE57C633AF /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				D1C38BAB20E7799100CDA114 /* MetalKit.framework */,
+				D1C38BAA20E7798200CDA114 /* Metal.framework */,
 				C5D6D38729038D51D66C2B83 /* libPods-HFAVPlayer.a */,
 			);
 			name = Frameworks;
@@ -86,6 +93,7 @@
 				D19DE92120DE04140079532A /* AppDelegate.m */,
 				D19DE92320DE04140079532A /* ViewController.h */,
 				D19DE92420DE04140079532A /* ViewController.m */,
+				D1C38BAC20E77B6900CDA114 /* Render */,
 				D19DE92620DE04140079532A /* Main.storyboard */,
 				D19DE92920DE04140079532A /* Assets.xcassets */,
 				D19DE92B20DE04140079532A /* LaunchScreen.storyboard */,
@@ -93,6 +101,15 @@
 				D19DE92F20DE04140079532A /* main.m */,
 			);
 			path = HFAVPlayer;
+			sourceTree = "<group>";
+		};
+		D1C38BAC20E77B6900CDA114 /* Render */ = {
+			isa = PBXGroup;
+			children = (
+				D1C38BAD20E77B8E00CDA114 /* HFMetalRender.h */,
+				D1C38BAE20E77B8E00CDA114 /* HFMetalRender.m */,
+			);
+			path = Render;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -220,6 +237,7 @@
 				D19DE92520DE04140079532A /* ViewController.m in Sources */,
 				D19DE93020DE04140079532A /* main.m in Sources */,
 				D19DE92220DE04140079532A /* AppDelegate.m in Sources */,
+				D1C38BAF20E77B8E00CDA114 /* HFMetalRender.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
