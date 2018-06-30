@@ -19,6 +19,13 @@
 
 @end
 
+/**
+ MTKView 默认通过60FPS帧率调用代理函数drawInMTKView 获取数据使用GPU进行渲染。
+ MTKDevice 是GPU的抽象类，用于获取GPU信息，管理CommandQueue等可以和GPU直接交互的对象。
+ MTLCommandQueue 负责产生和管理commandBuffer执行顺序。
+ MTLCommandBuffer 指令Buffer,负责包装GPU执行的指令数据
+ MTLEncoder GPU有多种类型，负责各种任务，所以CommandBuffer需要转码后交给GPU执行
+ */
 @implementation ViewController
 
 - (void)viewDidLoad {
