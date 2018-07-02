@@ -134,7 +134,7 @@ typedef void(^HFAVPlayerDecoderCallBackMessage)(HFAVPlayerMessage *message);
             if (frameFinishedPtr)
             {
                 //Convert the image from its native format to RGB.
-                sws_scale(swsCtx, (uint8_t const * const *)pframe->data, pframe->linesize, 0, pcodecCtx->height, pframeRGB->data, pframeRGB->linesize);
+//                sws_scale(swsCtx, (uint8_t const * const *)pframe->data, pframe->linesize, 0, pcodecCtx->height, pframeRGB->data, pframeRGB->linesize);
                 
                 // get the frame with pframeRGB
                 if (++i > 50)
@@ -142,9 +142,12 @@ typedef void(^HFAVPlayerDecoderCallBackMessage)(HFAVPlayerMessage *message);
                     @autoreleasepool
                     {
                         HFAVFrame *avFrame = [HFAVFrame new];
-                        avFrame.luma = copyFrameData(pframeRGB->data[0], pframeRGB->linesize[0], pcodecCtx->width, pcodecCtx->height);
-                        avFrame.chromaB = copyFrameData(pframeRGB->data[1], pframeRGB->linesize[1], pcodecCtx->width/2, pcodecCtx->height/2);
-                        avFrame.ChromaR = copyFrameData(pframeRGB->data[2], pframeRGB->linesize[2], pcodecCtx->width/2, pcodecCtx->height/2);
+//                        avFrame.luma = copyFrameData(pframeRGB->data[0], pframeRGB->linesize[0], pcodecCtx->width, pcodecCtx->height);
+//                        avFrame.chromaB = copyFrameData(pframeRGB->data[1], pframeRGB->linesize[1], pcodecCtx->width/2, pcodecCtx->height/2);
+//                        avFrame.ChromaR = copyFrameData(pframeRGB->data[2], pframeRGB->linesize[2], pcodecCtx->width/2, pcodecCtx->height/2);
+                        avFrame.luma = copyFrameData(pframe->data[0], pframe->linesize[0], pcodecCtx->width, pcodecCtx->height);
+                        avFrame.chromaB = copyFrameData(pframe->data[1], pframe->linesize[1], pcodecCtx->width/2, pcodecCtx->height/2);
+                        avFrame.ChromaR = copyFrameData(pframe->data[2], pframe->linesize[2], pcodecCtx->width/2, pcodecCtx->height/2);
                         
                         avFrame.width = pcodecCtx->width;
                         avFrame.height = pcodecCtx->height;
