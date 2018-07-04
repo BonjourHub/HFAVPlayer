@@ -9,5 +9,14 @@
 #ifndef HFAVPlayerPrefixHeader_h
 #define HFAVPlayerPrefixHeader_h
 
+#ifdef DEBUG
+#define HFDebugLog(format,...) NSLog(@"%s Log:%@",__func__,[NSString stringWithFormat:format, ##__VA_ARGS__])
+#define HFTODODebugLog(format,...) NSLog(@"%s 🔵Todo:%@",__func__,[NSString stringWithFormat:format, ##__VA_ARGS__])
+#else
+#define HFDebugLog(...) do { \
+} while(0)
+#define HFTODODebugLog(...) do { \
+} while(0)
+#endif
 
 #endif /* HFAVPlayerPrefixHeader_h */

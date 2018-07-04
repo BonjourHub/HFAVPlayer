@@ -394,6 +394,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 39BE4FHF98;
+				GCC_PREFIX_HEADER = "$(SRCROOT)/Lib/Expand/HFAVPlayerPrefixHeader.h";
 				INFOPLIST_FILE = HFAVPlayer/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -413,6 +414,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 39BE4FHF98;
+				GCC_PREFIX_HEADER = "$(SRCROOT)/Lib/Expand/HFAVPlayerPrefixHeader.h";
 				INFOPLIST_FILE = HFAVPlayer/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
