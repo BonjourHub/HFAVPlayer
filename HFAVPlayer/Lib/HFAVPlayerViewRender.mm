@@ -9,7 +9,28 @@
 // 添加纹理
 
 #import "HFAVPlayerViewRender.h"
-@import Metal;
+#import "HFAVPlayerViewRenderMakeTexture.h"
+#import <Metal/Metal.h>
+
+#import <simd/simd.h>
+
+static const long kInFlightCommandBuffers = 3;
+
+struct HFAVRenderColorParameters
+{
+    simd::float3x3 yuvToRGB;
+};
+
+static const float quad[] =
+{
+    -1, 9/32.0, 0,  0, 0,
+    1, -9/32.0, 0,  1, 1,
+    1,  9/32.0, 0,  1, 0,
+    
+    -1,  9/32.0, 0,  0, 0,
+    1, -9/32.0, 0,  1, 1,
+    -1, -9/32.0, 0,  0, 1,
+};
 
 @interface HFAVPlayerViewRender()
 
@@ -18,7 +39,14 @@
     id <MTLLibrary> _defaultLibrary;
     id <MTLRenderPipelineState> _pipelineState;
     id <MTLSamplerState> _samplerState;
+    
     id <MTLBuffer> _parametersBuffer;
+    id <MTLBuffer> _vertextBuffer;
+    
+    CVMetalTextureCacheRef _videoTextureCache;
+    
+    // 封面图
+    HFAVPlayerViewRenderMakeTexture * _quadTex;
     
     //控制资源访问
     dispatch_semaphore_t _inflight_semaphore;
@@ -36,13 +64,19 @@
     self = [super init];
     if (self)
     {
+        _inflight_semaphore = dispatch_semaphore_create(kInFlightCommandBuffers);
         _mtkView = mtkView;
-        [self _configWithMetalView:_mtkView];
+        BOOL config = [self _configWithMetalView:_mtkView];
+        if (!config) return self;
+        
+        [self _setVideoTexture];
+        
     }
     return self;
 }
 
-- (void)_configWithMetalView:(MTKView *)mtkView
+#pragma mark - 配置渲染环境
+- (BOOL)_configWithMetalView:(MTKView *)mtkView
 {
     _device = _mtkView.device;
     
@@ -53,18 +87,32 @@
     _commandQueue = [_device newCommandQueue];
     _defaultLibrary = [_device newDefaultLibrary];
     if (!_defaultLibrary) {
-        HFDebugLog(@"TOTO:>> Error:Couldn't create a default shader library");
-        return;
+        HFDebugLog(@"[Render]:TOTO:>> Error:Couldn't create a default shader library");
+        return NO;
     }
     
-    //渲染管线
+    // 渲染管线
     if ([self _preparePipelineState:mtkView] == NO) {
-        HFDebugLog(@"TODO:>> Error:count't create a valid pipeline state");
-        return;
+        HFDebugLog(@"[Render]:TODO:>> Error:count't create a valid pipeline state");
+        return NO;
     }
     
+    // Allocate a buffer to store vertex position data (we'll quad buffer this one)
+    _vertextBuffer = [_device newBufferWithBytes:quad length:sizeof(quad) options:MTLResourceCPUCacheModeDefaultCache];
+    _vertextBuffer.label = @"Vertices";
+    
+    // 封面图（没有视频数据用）
+    HFDebugLog(@"[Render]:TODO:>> 封面图可配置");
+    _quadTex = [[HFAVPlayerViewRenderMakeTexture alloc] initWithResourceName:@"lena" extension:@"png"];
+    BOOL load = [_quadTex loadIntoTextureWithDevice:_device];
+    if (load == NO) {
+        HFDebugLog(@"[Render]:Faild to load png texture.");
+    }
+    
+    return YES;
 }
 
+#pragma mark 管线
 - (BOOL)_preparePipelineState:(MTKView *)mtkView
 {
     ///加载定点函数/片段函数
@@ -94,9 +142,40 @@
     samplerDescriptor.magFilter = MTLSamplerMinMagFilterLinear;
     _samplerState = [_device newSamplerStateWithDescriptor:samplerDescriptor];
     
-//    _parametersBuffer = [_device newBufferWithLength:sizeof()*2 options:MTLResourceOptionCPUCacheModeDefault];
+    _parametersBuffer = [_device newBufferWithLength:sizeof(HFAVRenderColorParameters)*2 options:MTLResourceOptionCPUCacheModeDefault];
+    HFAVRenderColorParameters matrix;
+    simd::float3 A;
+    simd::float3 B;
+    simd::float3 C;
     
-    return NO;
+    A.x = 1.164;
+    A.y = 1.164;
+    A.z = 1.164;
+    
+    B.x = 0;
+    B.y = -0.231;
+    B.z = 2.112;
+    
+    C.x = 1.793;
+    C.y = -0.533;
+    C.z = 0;
+    
+    matrix.yuvToRGB = simd::float3x3{A, B, C};
+    
+    memcpy(_parametersBuffer.contents, &matrix, sizeof(HFAVRenderColorParameters));
+    
+    return YES;
+}
+
+#pragma mark - 设置视频纹理
+- (void)_setVideoTexture
+{
+    CVMetalTextureCacheFlush(_videoTextureCache, 0);
+    CVReturn error = CVMetalTextureCacheCreate(kCFAllocatorDefault, NULL, _device, NULL, &_videoTextureCache);
+    if (error) {
+        HFDebugLog(@"[Render]:>> ERROR: Could not create a texture cach");
+        assert(0);
+    }
 }
 
 #pragma mark - delegate
