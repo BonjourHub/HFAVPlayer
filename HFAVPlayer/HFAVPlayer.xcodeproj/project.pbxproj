@@ -7,8 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		1F24F68820EC71B2003DCD82 /* HFAVPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F24F68720EC71B2003DCD82 /* HFAVPlayer.m */; };
-		1F24F68B20EC7449003DCD82 /* HFAVPlayerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F24F68A20EC7449003DCD82 /* HFAVPlayerView.m */; };
+		1F24F68F20EC7BAA003DCD82 /* HFAVPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F24F68E20EC7BAA003DCD82 /* HFAVPlayer.m */; };
+		1F24F69220EC7BBD003DCD82 /* HFAVPlayerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F24F69120EC7BBD003DCD82 /* HFAVPlayerView.m */; };
+		1F24F69520EC7BD7003DCD82 /* HFAVPlayerViewRender.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F24F69420EC7BD7003DCD82 /* HFAVPlayerViewRender.m */; };
 		2CD0B4481785A1DF4D8E9DB4 /* libPods-HFAVPlayer.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C5D6D38729038D51D66C2B83 /* libPods-HFAVPlayer.a */; };
 		D19DE92220DE04140079532A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = D19DE92120DE04140079532A /* AppDelegate.m */; };
 		D19DE92520DE04140079532A /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D19DE92420DE04140079532A /* ViewController.m */; };
@@ -19,10 +20,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		1F24F68620EC71B2003DCD82 /* HFAVPlayer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = HFAVPlayer.h; path = "../../../../../../Downloads/Metal-VideoCapture/HFAVPlayer.h"; sourceTree = "<group>"; };
-		1F24F68720EC71B2003DCD82 /* HFAVPlayer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = HFAVPlayer.m; path = "../../../../../../Downloads/Metal-VideoCapture/HFAVPlayer.m"; sourceTree = "<group>"; };
-		1F24F68920EC7449003DCD82 /* HFAVPlayerView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = HFAVPlayerView.h; path = "../../../../../../Downloads/Metal-VideoCapture/HFAVPlayerView.h"; sourceTree = "<group>"; };
-		1F24F68A20EC7449003DCD82 /* HFAVPlayerView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = HFAVPlayerView.m; path = "../../../../../../Downloads/Metal-VideoCapture/HFAVPlayerView.m"; sourceTree = "<group>"; };
+		1F24F68D20EC7BAA003DCD82 /* HFAVPlayer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HFAVPlayer.h; sourceTree = "<group>"; };
+		1F24F68E20EC7BAA003DCD82 /* HFAVPlayer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HFAVPlayer.m; sourceTree = "<group>"; };
+		1F24F69020EC7BBD003DCD82 /* HFAVPlayerView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HFAVPlayerView.h; sourceTree = "<group>"; };
+		1F24F69120EC7BBD003DCD82 /* HFAVPlayerView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HFAVPlayerView.m; sourceTree = "<group>"; };
+		1F24F69320EC7BD7003DCD82 /* HFAVPlayerViewRender.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HFAVPlayerViewRender.h; sourceTree = "<group>"; };
+		1F24F69420EC7BD7003DCD82 /* HFAVPlayerViewRender.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HFAVPlayerViewRender.m; sourceTree = "<group>"; };
+		1F24F69720EC7C91003DCD82 /* HFAVPlayerPrefixHeader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HFAVPlayerPrefixHeader.h; sourceTree = "<group>"; };
 		BEC4C9516A92E488CD6C95DF /* Pods-HFAVPlayer.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HFAVPlayer.release.xcconfig"; path = "Pods/Target Support Files/Pods-HFAVPlayer/Pods-HFAVPlayer.release.xcconfig"; sourceTree = "<group>"; };
 		C5D6D38729038D51D66C2B83 /* libPods-HFAVPlayer.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-HFAVPlayer.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C745CA1426D7C63E940958BB /* Pods-HFAVPlayer.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HFAVPlayer.debug.xcconfig"; path = "Pods/Target Support Files/Pods-HFAVPlayer/Pods-HFAVPlayer.debug.xcconfig"; sourceTree = "<group>"; };
@@ -58,16 +62,26 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		1F24F68520EC6F12003DCD82 /* Lib */ = {
+		1F24F68C20EC7B6D003DCD82 /* Lib */ = {
 			isa = PBXGroup;
 			children = (
-				1F24F68620EC71B2003DCD82 /* HFAVPlayer.h */,
-				1F24F68720EC71B2003DCD82 /* HFAVPlayer.m */,
-				1F24F68920EC7449003DCD82 /* HFAVPlayerView.h */,
-				1F24F68A20EC7449003DCD82 /* HFAVPlayerView.m */,
+				1F24F68D20EC7BAA003DCD82 /* HFAVPlayer.h */,
+				1F24F68E20EC7BAA003DCD82 /* HFAVPlayer.m */,
+				1F24F69020EC7BBD003DCD82 /* HFAVPlayerView.h */,
+				1F24F69120EC7BBD003DCD82 /* HFAVPlayerView.m */,
+				1F24F69320EC7BD7003DCD82 /* HFAVPlayerViewRender.h */,
+				1F24F69420EC7BD7003DCD82 /* HFAVPlayerViewRender.m */,
+				1F24F69620EC7C09003DCD82 /* Expand */,
 			);
-			name = Lib;
-			path = "New Group";
+			path = Lib;
+			sourceTree = "<group>";
+		};
+		1F24F69620EC7C09003DCD82 /* Expand */ = {
+			isa = PBXGroup;
+			children = (
+				1F24F69720EC7C91003DCD82 /* HFAVPlayerPrefixHeader.h */,
+			);
+			path = Expand;
 			sourceTree = "<group>";
 		};
 		9A81346A2960ACE5A03D0F0C /* Pods */ = {
@@ -82,7 +96,7 @@
 		D19DE91420DE04140079532A = {
 			isa = PBXGroup;
 			children = (
-				1F24F68520EC6F12003DCD82 /* Lib */,
+				1F24F68C20EC7B6D003DCD82 /* Lib */,
 				D19DE91F20DE04140079532A /* HFAVPlayer */,
 				D19DE91E20DE04140079532A /* Products */,
 				9A81346A2960ACE5A03D0F0C /* Pods */,
@@ -237,8 +251,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				D19DE92520DE04140079532A /* ViewController.m in Sources */,
-				1F24F68820EC71B2003DCD82 /* HFAVPlayer.m in Sources */,
-				1F24F68B20EC7449003DCD82 /* HFAVPlayerView.m in Sources */,
+				1F24F68F20EC7BAA003DCD82 /* HFAVPlayer.m in Sources */,
+				1F24F69520EC7BD7003DCD82 /* HFAVPlayerViewRender.m in Sources */,
+				1F24F69220EC7BBD003DCD82 /* HFAVPlayerView.m in Sources */,
 				D19DE93020DE04140079532A /* main.m in Sources */,
 				D19DE92220DE04140079532A /* AppDelegate.m in Sources */,
 			);
