@@ -7,7 +7,12 @@
 //
 
 #import <Foundation/Foundation.h>
+@import UIKit;
 
 @interface HFAVPlayer : NSObject
+
+@property (nonatomic, strong) UIView *playerView;
+
++ (instancetype)playerWithURLString:(NSString *)urlString;
 
 @end

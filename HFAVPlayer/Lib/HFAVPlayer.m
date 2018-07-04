@@ -7,7 +7,38 @@
 //
 
 #import "HFAVPlayer.h"
+#import "HFAVPlayerView.h"
+
+@interface HFAVPlayer()
+
+
+@end
 
 @implementation HFAVPlayer
+
+#pragma mark - initInstance
+- (instancetype)init
+{
+    self = [super init];
+    if (self) {
+        [self playerView];
+    }
+    return self;
+}
+
++ (instancetype)playerWithURLString:(NSString *)urlString
+{
+    return [[HFAVPlayer alloc] init];
+}
+
+#pragma mark - getter
+- (UIView *)playerView
+{
+    if (!_playerView) {
+        _playerView = [HFAVPlayerView new];
+    }
+    return _playerView;
+}
+
 
 @end

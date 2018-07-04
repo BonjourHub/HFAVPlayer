@@ -7,7 +7,18 @@
 //
 
 #import <Foundation/Foundation.h>
+@import MetalKit;
 
-@interface HFAVPlayerViewRender : NSObject
+//#import <simd/simd.h>
+//
+//struct HFAVRenderColorParameters
+//{
+////    simd::float3x3 yuvToRGB;
+//};
+
+// Our platform independent renderer class
+@interface HFAVPlayerViewRender : NSObject<MTKViewDelegate>
+
+- (instancetype)initWithMetalKitView:(MTKView *)mtkView;
 
 @end
