@@ -11,6 +11,7 @@
 #import "HFAVPlayerViewRender.h"
 #import "HFAVPlayerViewRenderMakeTexture.h"
 #import <Metal/Metal.h>
+#import "HFAVPlayerViewRender+VideoData.h"
 
 #import <simd/simd.h>
 
@@ -21,6 +22,7 @@ struct HFAVRenderColorParameters
     simd::float3x3 yuvToRGB;
 };
 
+//16:9
 static const float quad[] =
 {
     -1, 9/32.0, 0,  0, 0,
@@ -42,8 +44,6 @@ static const float quad[] =
     
     id <MTLBuffer> _parametersBuffer;
     id <MTLBuffer> _vertextBuffer;
-    
-    CVMetalTextureCacheRef _videoTextureCache;
     
     // 封面图
     HFAVPlayerViewRenderMakeTexture * _quadTex;
@@ -70,6 +70,10 @@ static const float quad[] =
         if (!config) return self;
         
         [self _setVideoTexture];
+        
+        //TEST
+        NSURL *url = [[NSBundle mainBundle] URLForResource:@"test" withExtension:@"mp4"];
+        [self generateVideoDataWithURLString:[url absoluteString]];
         
     }
     return self;
@@ -178,16 +182,25 @@ static const float quad[] =
     }
 }
 
+#pragma mark - getter
+
 #pragma mark - delegate
 - (void)mtkView:(MTKView *)view drawableSizeWillChange:(CGSize)size
 {
     HFDebugLog(@"[Render]:drawable size will change");
 }
-
 - (void)drawInMTKView:(MTKView *)view
+{}
+#pragma mark 自定义绘制方法调用
+
+/**
+ 解决解码渲染频率同步问题
+ */
+- (void)drawInRenderView
 {
+    MTKView *view = self.mtkView;
     //TEST Color
-    view.clearColor = MTLClearColorMake(0.3, 0.3, 0.3, 1);
+    view.clearColor = MTLClearColorMake(0.9, 0.5, 0.7, 0.8);
     
     //检测当前信号量访问资源数，如果semaphore的value值为0的时候，线程将被阻塞，否则，semaphore的value值将--
     dispatch_semaphore_wait(_inflight_semaphore, DISPATCH_TIME_FOREVER);
@@ -223,7 +236,27 @@ static const float quad[] =
 {
     [renderEncoder pushDebugGroup:name];
     
-//    [renderEncoder setRenderPipelineState:<#(nonnull id<MTLRenderPipelineState>)#>];
+    [renderEncoder setRenderPipelineState:_pipelineState];
+    
+    [renderEncoder setVertexBuffer:_vertextBuffer offset:0 atIndex:0];
+    
+    [renderEncoder setFragmentBuffer:_parametersBuffer offset:0 atIndex:0];
+    
+    [renderEncoder setFragmentSamplerState:_samplerState atIndex:0];
+    
+    if (!_videoTexture[0])
+    {
+        [renderEncoder setFragmentTexture:_quadTex.texture atIndex:0];
+        [renderEncoder setFragmentTexture:_quadTex.texture atIndex:1];
+    }
+    else
+    {
+        [renderEncoder setFragmentTexture:_videoTexture[0] atIndex:0];
+        [renderEncoder setFragmentTexture:_videoTexture[1] atIndex:1];
+    }
+    
+    // tell the render context we want to draw our primitives
+    [renderEncoder drawPrimitives:MTLPrimitiveTypeTriangle vertexStart:0 vertexCount:6 instanceCount:2];
     
     [renderEncoder popDebugGroup];
 }

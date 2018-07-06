@@ -51,6 +51,7 @@
         _mtkView.device = MTLCreateSystemDefaultDevice();
         if (!_mtkView.device) HFDebugLog(@"TODO:Metal is not supported on this device");
         _mtkView.delegate = self.render;
+        [self _preferredFramesPerSecond:60];
     }
     return _mtkView;
 }
@@ -62,5 +63,14 @@
     }
     return _render;
 }
+
+#pragma mark -
+- (void)_preferredFramesPerSecond:(NSInteger)second
+{
+    _mtkView.preferredFramesPerSecond = second;
+}
+
+#pragma mark - Public
+
 
 @end
