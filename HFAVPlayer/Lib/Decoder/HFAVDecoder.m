@@ -8,6 +8,7 @@
 
 #import "HFAVDecoder.h"
 #import <QuartzCore/QuartzCore.h>
+#import <AudioToolbox/AudioToolbox.h>
 
 @interface HFAVDecoder ()
 
@@ -18,6 +19,7 @@
 @property (nonatomic, strong) CADisplayLink *decoderDisplayLink;
 @property (nonatomic, strong) AVAssetReader *inputAssetReader;
 @property (nonatomic, strong) AVAssetReaderTrackOutput *videoRenderTrackOutput;
+@property (nonatomic, strong) AVAssetReaderTrackOutput *audioRenderTrackOutput;
 
 @property (nonatomic, copy) HFAVDecoderCallBack decoderCallBack;
 
@@ -50,6 +52,26 @@
     return _videoRenderTrackOutput;
 }
 
+- (AVAssetReaderTrackOutput *)audioRenderTrackOutput
+{
+    if (!_audioRenderTrackOutput)
+    {
+        AVAssetTrack *inputAssetTrack = [[_inputAsset tracksWithMediaType:AVMediaTypeAudio] firstObject];
+        NSMutableDictionary *outputSettings = [NSMutableDictionary dictionaryWithCapacity:7];
+        [outputSettings setObject:@(kAudioFormatLinearPCM) forKey:AVFormatIDKey];
+        [outputSettings setObject:@(16) forKey:AVLinearPCMBitDepthKey];
+        [outputSettings setObject:@(NO) forKey:AVLinearPCMIsBigEndianKey];
+        [outputSettings setObject:@(NO) forKey:AVLinearPCMIsFloatKey];
+        [outputSettings setObject:@(YES) forKey:AVLinearPCMIsNonInterleaved];
+        [outputSettings setObject:@(44100.0) forKey:AVSampleRateKey];
+        [outputSettings setObject:@(1) forKey:AVNumberOfChannelsKey];
+        
+        _audioRenderTrackOutput = [AVAssetReaderTrackOutput assetReaderTrackOutputWithTrack:inputAssetTrack outputSettings:outputSettings];
+        _audioRenderTrackOutput.alwaysCopiesSampleData = NO;
+    }
+    return _audioRenderTrackOutput;
+}
+
 - (AVAssetReader *)inputAssetReader
 {
     if (!_inputAssetReader)
@@ -57,12 +79,14 @@
         NSError *error = nil;
         _inputAssetReader = [AVAssetReader assetReaderWithAsset:_inputAsset error:&error];
         [_inputAssetReader addOutput:self.videoRenderTrackOutput];
+        [_inputAssetReader addOutput:self.audioRenderTrackOutput];
         if (error) HFDebugLog(@"[Decodec] : Reader create error : %@",error);
     }
     return _inputAssetReader;
 }
 
 #pragma mark - action
+#pragma mark video data
 - (void)_displayLinkAction:(CADisplayLink *)displayLink
 {
     CMSampleBufferRef sampleBuffer = [_videoRenderTrackOutput copyNextSampleBuffer];
@@ -77,6 +101,12 @@
     
     HFDebugLog(@"[Decodec] : play finished pause");
     [self pauseDecode];
+}
+
+#pragma mark audio data
+- (CMSampleBufferRef)audioSampleBuffer
+{
+   return [_audioRenderTrackOutput copyNextSampleBuffer];
 }
 
 #pragma mark - Public

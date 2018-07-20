@@ -261,4 +261,5 @@ static const float quad[] =
     [renderEncoder popDebugGroup];
 }
 
+
 @end

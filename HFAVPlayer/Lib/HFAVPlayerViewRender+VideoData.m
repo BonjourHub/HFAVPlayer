@@ -8,16 +8,18 @@
 
 #import "HFAVPlayerViewRender+VideoData.h"
 #import "HFAVDecoder.h"
+#import "HFAVAudioGraph.h"
 
-@interface HFAVPlayerViewRender()
+@interface HFAVPlayerViewRender()<HFAVAudioGraphRenderDelegate>
 
 @end
+static HFAVDecoder *decoder = nil;
+static AudioBufferList _bufferList;
 
 @implementation HFAVPlayerViewRender (VideoData)
 
 - (void)generateVideoDataWithURLString:(NSString *)urlString
 {
-    static HFAVDecoder *decoder = nil;
     decoder = [[HFAVDecoder alloc] init];
     DefineWeakInstance(self);
     [decoder decodecWithURL:[NSURL URLWithString:urlString] completion:^(CVPixelBufferRef pixelBuffer, NSError *error)
@@ -26,6 +28,11 @@
         if (pixelBuffer) [WeakInstance _display:pixelBuffer];
          [WeakInstance drawInRenderView];
     }];
+    
+    static HFAVAudioGraph *audio = nil;
+    audio = [[HFAVAudioGraph alloc] init];
+    audio.delegate = self;
+    [audio start];
 }
 
 #pragma mark - 数据填充
@@ -61,6 +68,25 @@
     
     CVBufferRelease(y_texture);
     CVBufferRelease(uv_texture);
+}
+
+#pragma mark - audio
+//- (AudioBufferList *)audioRenderGetBufferList
+//{
+//    CMSampleBufferRef sampleBuffer = [decoder audioSampleBuffer];
+//    HFDebugLog(@"audio sampleBuffer %@",sampleBuffer);
+//    size_t bufferListSizeNeededOut = 0;
+//    CMBlockBufferRef blockBufferOut = NULL;
+//    OSStatus status = CMSampleBufferGetAudioBufferListWithRetainedBlockBuffer(sampleBuffer, &bufferListSizeNeededOut, &_bufferList, sizeof(_bufferList), kCFAllocatorSystemDefault, kCFAllocatorSystemDefault, kCMSampleBufferFlag_AudioBufferList_Assure16ByteAlignment, &blockBufferOut);
+////    OSStatus status = CMSampleBufferGetAudioBufferListWithRetainedBlockBuffer(sampleBuffer, NULL, &_bufferList, sizeof(_bufferList), NULL, NULL, 0, &blockBufferOut);
+//    if (status) HFDebugLog(@"audio error %d",status);
+//
+//    return &_bufferList;
+//}
+
+- (CMSampleBufferRef)audioRenderGetSampleBuffer
+{
+    return [decoder audioSampleBuffer];
 }
 
 @end
