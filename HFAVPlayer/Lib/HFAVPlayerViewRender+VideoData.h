@@ -12,4 +12,6 @@
 
 - (void)generateVideoDataWithURLString:(NSString *)urlString;
 
+-  (void)_display:(CVPixelBufferRef)overlay;
+
 @end

@@ -10,6 +10,14 @@
 #import <MetalKit/MetalKit.h>
 #import <AVFoundation/AVFoundation.h>
 
+@class HFAVPlayerViewRender;
+
+@protocol HFAVPlayerViewRenderDelegate<NSObject>
+
+- (CMSampleBufferRef)playerRenderView:(HFAVPlayerViewRender *)render mtkView:(MTKView *)mtkView;
+
+@end
+
 // Our platform independent renderer class
 @interface HFAVPlayerViewRender : NSObject<MTKViewDelegate>
 
@@ -17,6 +25,9 @@
     id<MTLTexture> _videoTexture[2];
     CVMetalTextureCacheRef _videoTextureCache;
 }
+
+@property (nonatomic, weak) id<HFAVPlayerViewRenderDelegate> delegate;
+@property (nonatomic, strong) CADisplayLink *displayLink;
 
 - (instancetype)initWithMetalKitView:(MTKView *)mtkView;
 /**

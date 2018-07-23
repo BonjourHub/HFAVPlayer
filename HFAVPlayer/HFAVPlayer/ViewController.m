@@ -30,7 +30,9 @@
 //    [_decoder decodecWithURL:url completion:^(CVPixelBufferRef pixelBuffer, NSError *error) {
 //
 //    }];
-    _player = [HFAVPlayer playerWithURLString:nil];
+    
+    NSURL *url = [[NSBundle mainBundle] URLForResource:@"test" withExtension:@"mp4"];
+    _player = [HFAVPlayer playerWithURLString:[url absoluteString]];
     _player.playerView.frame = self.view.bounds;
     [self.view addSubview:_player.playerView];
 }

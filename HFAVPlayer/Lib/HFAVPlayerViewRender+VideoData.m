@@ -69,10 +69,29 @@ static HFAVDecoder *decoder = nil;
     CVBufferRelease(uv_texture);
 }
 
+#pragma mark -
+//- (void)displayLinkAction:(CADisplayLink *)displayLink
+//{
+//    CMSampleBufferRef sampleBuffer = [_videoRenderTrackOutput copyNextSampleBuffer];
+//    CVPixelBufferRef pixelBuffer = CMSampleBufferGetImageBuffer(sampleBuffer);
+//    if (pixelBuffer)
+//    {
+//        //        HFDebugLog(@"[Decodec] : pix");
+//        if (_decoderCallBack) _decoderCallBack(pixelBuffer, nil);
+//        if (pixelBuffer != NULL) CFRelease(pixelBuffer);
+//        return;
+//    }
+//
+//    HFDebugLog(@"[Decodec] : play finished pause");
+//    [self pauseDecode];
+//}
+
 #pragma mark - audio
 - (CMSampleBufferRef)audioRenderGetSampleBuffer
 {
     return [decoder audioSampleBuffer];
 }
+
+
 
 @end

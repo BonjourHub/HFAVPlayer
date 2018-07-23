@@ -15,6 +15,8 @@ typedef void(^HFAVDecoderCallBack)(CVPixelBufferRef pixelBuffer, NSError *error)
 
 - (void)decodecWithURL:(NSURL *)url completion:(HFAVDecoderCallBack)completion;
 
+///获取视频数据
+- (CMSampleBufferRef)videoSampleBufferRef;
 /// 获取音频数据
 - (CMSampleBufferRef)audioSampleBuffer;
 

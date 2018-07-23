@@ -16,7 +16,6 @@
     AVURLAsset * _inputAsset;
 }
 
-@property (nonatomic, strong) CADisplayLink *decoderDisplayLink;
 @property (nonatomic, strong) AVAssetReader *inputAssetReader;
 @property (nonatomic, strong) AVAssetReaderTrackOutput *videoRenderTrackOutput;
 @property (nonatomic, strong) AVAssetReaderTrackOutput *audioRenderTrackOutput;
@@ -29,16 +28,6 @@
 
 
 #pragma mark - getter
-- (CADisplayLink *)decoderDisplayLink
-{
-    if (!_decoderDisplayLink)
-    {
-        _decoderDisplayLink = [CADisplayLink displayLinkWithTarget:self selector:@selector(_displayLinkAction:)];
-        [self dataRateWithPreferredFramesPerSecond:35];
-        [_decoderDisplayLink addToRunLoop:[NSRunLoop currentRunLoop] forMode:NSRunLoopCommonModes];
-    }
-    return _decoderDisplayLink;
-}
 
 - (AVAssetReaderTrackOutput *)videoRenderTrackOutput
 {
@@ -87,50 +76,29 @@
 
 #pragma mark - action
 #pragma mark video data
-- (void)_displayLinkAction:(CADisplayLink *)displayLink
+- (CMSampleBufferRef)videoSampleBufferRef
 {
-    CMSampleBufferRef sampleBuffer = [_videoRenderTrackOutput copyNextSampleBuffer];
-    CVPixelBufferRef pixelBuffer = CMSampleBufferGetImageBuffer(sampleBuffer);
-    if (pixelBuffer)
-    {
-//        HFDebugLog(@"[Decodec] : pix");
-        if (_decoderCallBack) _decoderCallBack(pixelBuffer, nil);
-        if (pixelBuffer != NULL) CFRelease(pixelBuffer);
-        return;
-    }
-    
-    HFDebugLog(@"[Decodec] : play finished pause");
-    [self pauseDecode];
+    if (_videoRenderTrackOutput)
+        return [_videoRenderTrackOutput copyNextSampleBuffer];
+    return nil;
 }
 
 #pragma mark audio data
-- (CMSampleBufferRef)audioSampleBuffer
+- (CMSampleBufferRef)audioSampleBufferRef
 {
    return [_audioRenderTrackOutput copyNextSampleBuffer];
 }
 
 #pragma mark - Public
-- (void)dataRateWithPreferredFramesPerSecond:(NSInteger)second
-{
-    if (@available(iOS 10.0, *))
-    {
-        _decoderDisplayLink.preferredFramesPerSecond = second;
-    }
-    else
-    {
-        // Fallback on earlier versions
-        _decoderDisplayLink.frameInterval = 60/second;
-    }//FPS 30 解码速率
-}
-- (void)pauseDecode
-{
-    [_decoderDisplayLink setPaused:YES];
-}
-
-- (void)resumDecode
-{
-    [self.decoderDisplayLink setPaused:NO];
-}
+//- (void)pauseDecode
+//{
+//    [_decoderDisplayLink setPaused:YES];
+//}
+//
+//- (void)resumDecode
+//{
+//    [self.decoderDisplayLink setPaused:NO];
+//}
 
 #pragma mark - Decode
 - (void)decodecWithURL:(NSURL *)url completion:(HFAVDecoderCallBack)completion
@@ -142,9 +110,9 @@
     [self _loadAssetValus:_inputAsset completion:^(bool loaded)
     {
         if (loaded == YES) [WeakInstance _processInputAsset];
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [WeakInstance resumDecode];
-        });
+//        dispatch_async(dispatch_get_main_queue(), ^{
+//            [WeakInstance resumDecode];
+//        });
     }];
 }
 

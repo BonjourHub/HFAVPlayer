@@ -28,7 +28,9 @@
 
 + (instancetype)playerWithURLString:(NSString *)urlString
 {
-    return [[HFAVPlayer alloc] init];
+    HFAVPlayer *player = [[HFAVPlayer alloc] init];
+    [(HFAVPlayerView *)player.playerView playWithURL:[NSURL URLWithString:urlString]];
+    return player;
 }
 
 #pragma mark - getter

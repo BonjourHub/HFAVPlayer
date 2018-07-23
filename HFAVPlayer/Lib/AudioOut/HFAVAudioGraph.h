@@ -22,5 +22,6 @@
 @property (nonatomic, weak) id<HFAVAudioGraphRenderDelegate>delegate;
 
 - (void)start;
+- (void)stop;
 
 @end

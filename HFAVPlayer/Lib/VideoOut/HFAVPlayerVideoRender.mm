@@ -1,26 +1,17 @@
 //
-//  HFAVPlayerViewRender.m
+//  HFAVPlayerVideoRender.m
 //  HFAVPlayer
 //
-//  Created by pengfei28 on 2018/7/4.
+//  Created by pengfei28 on 2018/7/23.
 //  Copyright © 2018年 pengfei. All rights reserved.
 //
 
-// 添加纹理
-
-#import "HFAVPlayerViewRender.h"
-#import "HFAVPlayerViewRenderMakeTexture.h"
+#import "HFAVPlayerVideoRender.h"
 #import <Metal/Metal.h>
-#import "HFAVPlayerViewRender+VideoData.h"
+#import <MetalKit/MetalKit.h>
+#import "HFAVPlayerViewRenderMakeTexture.h"
 
-#import <simd/simd.h>
-
-static const long kInFlightCommandBuffers = 3;
-
-struct HFAVRenderColorParameters
-{
-    simd::float3x3 yuvToRGB;
-};
+static const long kInFlightCommandBuffers = 3;//每次访问三个
 
 //16:9
 static const float quad[] =
@@ -34,9 +25,16 @@ static const float quad[] =
     -1, -9/32.0, 0,  0, 1,
 };
 
-@interface HFAVPlayerViewRender()
-
+struct HFAVRenderColorParameters
 {
+    simd::float3x3 yuvToRGB;
+};
+
+@interface HFAVPlayerVideoRender()<MTKViewDelegate>
+{
+    //控制资源访问
+    dispatch_semaphore_t _inflight_semaphore;
+    
     id <MTLCommandQueue> _commandQueue;
     id <MTLLibrary> _defaultLibrary;
     id <MTLRenderPipelineState> _pipelineState;
@@ -48,48 +46,73 @@ static const float quad[] =
     // 封面图
     HFAVPlayerViewRenderMakeTexture * _quadTex;
     
-    //控制资源访问
-    dispatch_semaphore_t _inflight_semaphore;
+    id<MTLTexture> _videoTexture[2];
+    CVMetalTextureCacheRef _videoTextureCache;
 }
-
-@property (nonatomic, weak) MTKView *mtkView;
-@property (nonatomic, weak) id <MTLDevice> device;
+@property (nonatomic, strong) MTKView *mtkView;
 
 @end
 
-@implementation HFAVPlayerViewRender
+@implementation HFAVPlayerVideoRender
 
-- (instancetype)initWithMetalKitView:(MTKView *)mtkView
+- (instancetype)initWithFrame:(CGRect)frame
 {
-    self = [super init];
-    if (self)
-    {
+    self = [super initWithFrame:frame];
+    if (self) {
+        self.backgroundColor = [UIColor clearColor];
+        [self _addSubviews];
+        
         _inflight_semaphore = dispatch_semaphore_create(kInFlightCommandBuffers);
-        _mtkView = mtkView;
-        BOOL config = [self _configWithMetalView:_mtkView];
+        BOOL config = [self _configWithMetalView:self.mtkView];
         if (!config) return self;
         
         [self _setVideoTexture];
-        
-        //TEST
-//        NSURL *url = [[NSBundle mainBundle] URLForResource:@"test" withExtension:@"mp4"];
-//        [self generateVideoDataWithURLString:[url absoluteString]];
-        
     }
     return self;
 }
 
-#pragma mark - 配置渲染环境
+- (void)_addSubviews
+{
+    [self addSubview:self.mtkView];
+}
+
+- (void)layoutSubviews
+{
+    [super layoutSubviews];
+    _mtkView.frame = self.bounds;
+}
+
+#pragma mark - getter
+- (MTKView *)mtkView
+{
+    if (!_mtkView) {
+        _mtkView = [MTKView new];
+        _mtkView.device = MTLCreateSystemDefaultDevice();
+        if (!_mtkView.device) HFDebugLog(@"TODO:Metal is not supported on this device");
+        _mtkView.delegate = self;
+//        [self _preferredFramesPerSecond:60];
+        
+//         TEST 等解码完成 再渲染
+        _mtkView.paused = YES;
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            _mtkView.paused = NO;
+        });
+    }
+    return _mtkView;
+}
+
+#pragma mark - Config
+#pragma mark 配置渲染环境
 - (BOOL)_configWithMetalView:(MTKView *)mtkView
 {
-    _device = _mtkView.device;
+    id<MTLDevice> device = _mtkView.device;
     
     mtkView.depthStencilPixelFormat = MTLPixelFormatInvalid;
     mtkView.depthStencilPixelFormat = MTLPixelFormatInvalid;
     mtkView.sampleCount = 1;
     
-    _commandQueue = [_device newCommandQueue];
-    _defaultLibrary = [_device newDefaultLibrary];
+    _commandQueue = [device newCommandQueue];
+    _defaultLibrary = [device newDefaultLibrary];
     if (!_defaultLibrary) {
         HFDebugLog(@"[Render]:TOTO:>> Error:Couldn't create a default shader library");
         return NO;
@@ -102,13 +125,13 @@ static const float quad[] =
     }
     
     // Allocate a buffer to store vertex position data (we'll quad buffer this one)
-    _vertextBuffer = [_device newBufferWithBytes:quad length:sizeof(quad) options:MTLResourceCPUCacheModeDefaultCache];
+    _vertextBuffer = [device newBufferWithBytes:quad length:sizeof(quad) options:MTLResourceCPUCacheModeDefaultCache];
     _vertextBuffer.label = @"Vertices";
     
     // 封面图（没有视频数据用）
     HFDebugLog(@"[Render]:TODO:>> 封面图可配置");
     _quadTex = [[HFAVPlayerViewRenderMakeTexture alloc] initWithResourceName:@"lena" extension:@"png"];
-    BOOL load = [_quadTex loadIntoTextureWithDevice:_device];
+    BOOL load = [_quadTex loadIntoTextureWithDevice:mtkView.device];
     if (load == NO) {
         HFDebugLog(@"[Render]:Faild to load png texture.");
     }
@@ -134,7 +157,7 @@ static const float quad[] =
     
     //渲染管线
     NSError *error = nil;
-    _pipelineState = [_device newRenderPipelineStateWithDescriptor:pipelineStateDescriptor error:&error];
+    _pipelineState = [mtkView.device newRenderPipelineStateWithDescriptor:pipelineStateDescriptor error:&error];
     if (!_pipelineState) {
         HFDebugLog(@"[Render]:Error >> Failed Aquiring pipline state: %@",error);
         return NO;
@@ -144,9 +167,9 @@ static const float quad[] =
     MTLSamplerDescriptor *samplerDescriptor = [MTLSamplerDescriptor new];
     samplerDescriptor.minFilter = MTLSamplerMinMagFilterNearest;
     samplerDescriptor.magFilter = MTLSamplerMinMagFilterLinear;
-    _samplerState = [_device newSamplerStateWithDescriptor:samplerDescriptor];
+    _samplerState = [mtkView.device newSamplerStateWithDescriptor:samplerDescriptor];
     
-    _parametersBuffer = [_device newBufferWithLength:sizeof(HFAVRenderColorParameters)*2 options:MTLResourceOptionCPUCacheModeDefault];
+    _parametersBuffer = [mtkView.device newBufferWithLength:sizeof(HFAVRenderColorParameters)*2 options:MTLResourceOptionCPUCacheModeDefault];
     HFAVRenderColorParameters matrix;
     simd::float3 A;
     simd::float3 B;
@@ -175,48 +198,21 @@ static const float quad[] =
 - (void)_setVideoTexture
 {
     CVMetalTextureCacheFlush(_videoTextureCache, 0);
-    CVReturn error = CVMetalTextureCacheCreate(kCFAllocatorDefault, NULL, _device, NULL, &_videoTextureCache);
+    CVReturn error = CVMetalTextureCacheCreate(kCFAllocatorDefault, NULL, _mtkView.device, NULL, &_videoTextureCache);
     if (error) {
         HFDebugLog(@"[Render]:>> ERROR: Could not create a texture cach");
         assert(0);
     }
 }
 
-#pragma mark - getter
-- (CADisplayLink *)displayLink
-{
-    if (!_displayLink)
-    {
-        _displayLink = [CADisplayLink displayLinkWithTarget:self selector:@selector(_displayLinkAction:)];
-        [self dataRateWithPreferredFramesPerSecond:35];
-        [_displayLink addToRunLoop:[NSRunLoop currentRunLoop] forMode:NSRunLoopCommonModes];
-    }
-    return _displayLink;
-}
-
-- (void)dataRateWithPreferredFramesPerSecond:(NSInteger)second
-{
-    if (@available(iOS 10.0, *))
-    {
-        _displayLink.preferredFramesPerSecond = second;
-    }
-    else
-    {
-        // Fallback on earlier versions
-        _displayLink.frameInterval = 60/second;
-    }//FPS 30 解码速率
-}
-
-#pragma mark - delegate
+#pragma mark - MTKViewDelegate
 - (void)mtkView:(MTKView *)view drawableSizeWillChange:(CGSize)size
-{
-    HFDebugLog(@"[Render]:drawable size will change");
-}
+{}
 - (void)drawInMTKView:(MTKView *)view
 {
-    if ([self.delegate respondsToSelector:@selector(playerRenderView:mtkView:)])
+    if ([self.dataSource respondsToSelector:@selector(playerRenderView:mtkView:)])
     {
-        CMSampleBufferRef sampleBuffer = [self.delegate playerRenderView:self mtkView:view];
+        CMSampleBufferRef sampleBuffer = [self.dataSource playerRenderView:self mtkView:view];
         CVPixelBufferRef pixBuffer = CMSampleBufferGetImageBuffer(sampleBuffer);
         if (pixBuffer)
         {
@@ -226,6 +222,49 @@ static const float quad[] =
         }
     }
 }
+
+@end
+
+
+@implementation HFAVPlayerVideoRender (Texture)
+#pragma mark - 数据填充
+-  (void)_display:(CVPixelBufferRef)overlay {
+    if (!overlay) {
+        return;
+    }
+    
+    if (!_videoTextureCache) {
+        NSLog(@"No video texture cache");
+        return;
+    }
+    
+    [self _makeYUVTexture:overlay];
+}
+
+- (void)_makeYUVTexture:(CVPixelBufferRef)pixelBuffer {
+    CVMetalTextureRef y_texture ;
+    float y_width = CVPixelBufferGetWidthOfPlane(pixelBuffer, 0);
+    float y_height = CVPixelBufferGetHeightOfPlane(pixelBuffer, 0);
+    CVMetalTextureCacheCreateTextureFromImage(kCFAllocatorDefault, _videoTextureCache, pixelBuffer, nil, MTLPixelFormatR8Unorm, y_width, y_height, 0, &y_texture);
+    
+    CVMetalTextureRef uv_texture;
+    float uv_width = CVPixelBufferGetWidthOfPlane(pixelBuffer, 1);
+    float uv_height = CVPixelBufferGetHeightOfPlane(pixelBuffer, 1);
+    CVMetalTextureCacheCreateTextureFromImage(kCFAllocatorDefault, _videoTextureCache, pixelBuffer, nil, MTLPixelFormatRG8Unorm, uv_width, uv_height, 1, &uv_texture);
+    
+    id<MTLTexture> luma = CVMetalTextureGetTexture(y_texture);
+    id<MTLTexture> chroma = CVMetalTextureGetTexture(uv_texture);
+    
+    _videoTexture[0] = luma;
+    _videoTexture[1] = chroma;
+    
+    CVBufferRelease(y_texture);
+    CVBufferRelease(uv_texture);
+}
+@end
+
+//#import "HFAVPlayerVideoRender+Draw.h"
+@implementation HFAVPlayerVideoRender (Draw)
 
 #pragma mark 自定义绘制方法调用
 /**
@@ -296,5 +335,5 @@ static const float quad[] =
     [renderEncoder popDebugGroup];
 }
 
-
 @end
+

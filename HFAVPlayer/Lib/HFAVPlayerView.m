@@ -8,14 +8,16 @@
 
 #import "HFAVPlayerView.h"
 #import "HFAVPlayerViewRender.h"
+#import "HFAVDecoder.h"
+#import "HFAVPlayerVideoRender.h"
 
 @import MetalKit;
 @import Metal;
 
-@interface HFAVPlayerView()
+@interface HFAVPlayerView()<HFAVPlayerVideoRenderDataSource>
 
-@property (nonatomic, strong) MTKView *mtkView;
-@property (nonatomic, strong) HFAVPlayerViewRender *render;
+@property (nonatomic, strong) HFAVDecoder *decoder;
+@property (nonatomic, strong) HFAVPlayerVideoRender *videoRender;
 
 @end
 
@@ -33,44 +35,46 @@
 
 - (void)_addSubviews
 {
-    [self addSubview:self.mtkView];
+    [self addSubview:self.videoRender];
     
 }
 
 - (void)layoutSubviews
 {
     [super layoutSubviews];
-    _mtkView.frame = self.bounds;
+    _videoRender.frame = self.bounds;
 }
 
 #pragma mark - getter
-- (MTKView *)mtkView
+- (HFAVPlayerVideoRender *)videoRender
 {
-    if (!_mtkView) {
-        _mtkView = [MTKView new];
-        _mtkView.device = MTLCreateSystemDefaultDevice();
-        if (!_mtkView.device) HFDebugLog(@"TODO:Metal is not supported on this device");
-        _mtkView.delegate = self.render;
-        [self _preferredFramesPerSecond:60];
+    if (!_videoRender)
+    {
+        _videoRender = [HFAVPlayerVideoRender new];
+        _videoRender.dataSource = self;
     }
-    return _mtkView;
+    return _videoRender;
 }
 
-- (HFAVPlayerViewRender *)render
+- (HFAVDecoder *)decoder
 {
-    if (!_render) {
-        _render = [[HFAVPlayerViewRender alloc] initWithMetalKitView:self.mtkView];
+    if (!_decoder)
+    {
+        _decoder = [HFAVDecoder new];
     }
-    return _render;
-}
-
-#pragma mark -
-- (void)_preferredFramesPerSecond:(NSInteger)second
-{
-    _mtkView.preferredFramesPerSecond = second;
+    return _decoder;
 }
 
 #pragma mark - Public
+- (void)playWithURL:(NSURL *)url
+{
+    [self.decoder decodecWithURL:url completion:nil];
+}
 
+#pragma mark - DataSource
+- (CMSampleBufferRef)playerRenderView:(HFAVPlayerVideoRender *)render mtkView:(MTKView *)mtkView
+{
+    return [self.decoder videoSampleBufferRef];
+}
 
 @end

@@ -11,4 +11,6 @@
 
 @interface HFAVPlayerView : UIView
 
+- (void)playWithURL:(NSURL *)url;
+
 @end

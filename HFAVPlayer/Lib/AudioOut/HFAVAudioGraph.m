@@ -123,7 +123,6 @@ static OSStatus PlayCallBack(void *inRefCon, AudioUnitRenderActionFlags *ioActio
     {
         if (!_bufferList || _readedSize + ioData->mBuffers[0].mDataByteSize > _bufferList->mBuffers[0].mDataByteSize)
         {
-//            _bufferList = [self.delegate audioRenderGetBufferList];
             _bufferList = [self __getBufferList];
             _readedSize = 0;
         }
