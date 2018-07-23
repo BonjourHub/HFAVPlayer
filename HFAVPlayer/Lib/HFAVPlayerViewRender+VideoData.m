@@ -14,7 +14,6 @@
 
 @end
 static HFAVDecoder *decoder = nil;
-static AudioBufferList _bufferList;
 
 @implementation HFAVPlayerViewRender (VideoData)
 
@@ -71,19 +70,6 @@ static AudioBufferList _bufferList;
 }
 
 #pragma mark - audio
-//- (AudioBufferList *)audioRenderGetBufferList
-//{
-//    CMSampleBufferRef sampleBuffer = [decoder audioSampleBuffer];
-//    HFDebugLog(@"audio sampleBuffer %@",sampleBuffer);
-//    size_t bufferListSizeNeededOut = 0;
-//    CMBlockBufferRef blockBufferOut = NULL;
-//    OSStatus status = CMSampleBufferGetAudioBufferListWithRetainedBlockBuffer(sampleBuffer, &bufferListSizeNeededOut, &_bufferList, sizeof(_bufferList), kCFAllocatorSystemDefault, kCFAllocatorSystemDefault, kCMSampleBufferFlag_AudioBufferList_Assure16ByteAlignment, &blockBufferOut);
-////    OSStatus status = CMSampleBufferGetAudioBufferListWithRetainedBlockBuffer(sampleBuffer, NULL, &_bufferList, sizeof(_bufferList), NULL, NULL, 0, &blockBufferOut);
-//    if (status) HFDebugLog(@"audio error %d",status);
-//
-//    return &_bufferList;
-//}
-
 - (CMSampleBufferRef)audioRenderGetSampleBuffer
 {
     return [decoder audioSampleBuffer];

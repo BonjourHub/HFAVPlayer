@@ -165,11 +165,16 @@ static OSStatus PlayCallBack(void *inRefCon, AudioUnitRenderActionFlags *ioActio
 - (AudioBufferList *)__audioBufferListWithSampleBuffer:(CMSampleBufferRef)sampleBuffer
 {
     HFDebugLog(@"HF-AG-sampleBuffer %@",sampleBuffer);
-    
+    if (!sampleBuffer)
+    {
+        [self stop];
+        return nil;
+    }
     CMBlockBufferRef blockBufferOut = NULL;
 //    size_t bufferListSizeNeededOut = 0;
 //    OSStatus status = CMSampleBufferGetAudioBufferListWithRetainedBlockBuffer(sampleBuffer, &bufferListSizeNeededOut, &_sampleBufferList, sizeof(_sampleBufferList), kCFAllocatorSystemDefault, kCFAllocatorSystemDefault, kCMSampleBufferFlag_AudioBufferList_Assure16ByteAlignment, &blockBufferOut);
         OSStatus status = CMSampleBufferGetAudioBufferListWithRetainedBlockBuffer(sampleBuffer, NULL, &_sampleBufferList, sizeof(_sampleBufferList), NULL, NULL, 0, &blockBufferOut);
+    CFRelease(sampleBuffer);
     
     return &_sampleBufferList;
 }
