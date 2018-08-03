@@ -31,7 +31,7 @@
 //
 //    }];
     
-    NSURL *url = [[NSBundle mainBundle] URLForResource:@"test" withExtension:@"mp4"];
+    NSURL *url = [[NSBundle mainBundle] URLForResource:@"test1" withExtension:@"mp4"];
     _player = [HFAVPlayer playerWithURLString:[url absoluteString]];
     _player.playerView.frame = self.view.bounds;
     [self.view addSubview:_player.playerView];

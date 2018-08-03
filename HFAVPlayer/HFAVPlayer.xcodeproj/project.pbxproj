@@ -14,6 +14,11 @@
 		1F24F69920ECAC05003DCD82 /* HFAVPlayerTexture.metal in Sources */ = {isa = PBXBuildFile; fileRef = 1F24F69820ECAC05003DCD82 /* HFAVPlayerTexture.metal */; };
 		1F24F69C20ECBB66003DCD82 /* HFAVPlayerViewRenderMakeTexture.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F24F69B20ECBB66003DCD82 /* HFAVPlayerViewRenderMakeTexture.m */; };
 		1F24F69F20ECBD35003DCD82 /* lena.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F24F69E20ECBD35003DCD82 /* lena.png */; };
+		1F44E1B2211042D300B74D4D /* test1.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 1F44E1B1211042D300B74D4D /* test1.mp4 */; };
+		1F44E1B62110674600B74D4D /* HFAudioPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F44E1B52110674600B74D4D /* HFAudioPlayer.m */; };
+		1F44E1B92110694E00B74D4D /* AudioViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F44E1B82110694E00B74D4D /* AudioViewController.m */; };
+		1F44E1BC21106D4500B74D4D /* HIAudioPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F44E1BA21106D4500B74D4D /* HIAudioPlayer.m */; };
+		1F44E1BE21106F0500B74D4D /* test.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 1F44E1BD21106F0500B74D4D /* test.mp3 */; };
 		1FE7B46F20EDC29F008C8EEC /* HFAVDecoder.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FE7B46E20EDC29F008C8EEC /* HFAVDecoder.m */; };
 		1FE7B47920EE2543008C8EEC /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FE7B47820EE2543008C8EEC /* CoreMedia.framework */; };
 		1FE7B47B20EE254D008C8EEC /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FE7B47A20EE254D008C8EEC /* AVFoundation.framework */; };
@@ -43,6 +48,14 @@
 		1F24F69A20ECBB66003DCD82 /* HFAVPlayerViewRenderMakeTexture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HFAVPlayerViewRenderMakeTexture.h; sourceTree = "<group>"; };
 		1F24F69B20ECBB66003DCD82 /* HFAVPlayerViewRenderMakeTexture.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HFAVPlayerViewRenderMakeTexture.m; sourceTree = "<group>"; };
 		1F24F69E20ECBD35003DCD82 /* lena.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = lena.png; sourceTree = "<group>"; };
+		1F44E1B1211042D300B74D4D /* test1.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = test1.mp4; sourceTree = "<group>"; };
+		1F44E1B42110674600B74D4D /* HFAudioPlayer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HFAudioPlayer.h; sourceTree = "<group>"; };
+		1F44E1B52110674600B74D4D /* HFAudioPlayer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HFAudioPlayer.m; sourceTree = "<group>"; };
+		1F44E1B72110694E00B74D4D /* AudioViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AudioViewController.h; sourceTree = "<group>"; };
+		1F44E1B82110694E00B74D4D /* AudioViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AudioViewController.m; sourceTree = "<group>"; };
+		1F44E1BA21106D4500B74D4D /* HIAudioPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HIAudioPlayer.m; sourceTree = "<group>"; };
+		1F44E1BB21106D4500B74D4D /* HIAudioPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HIAudioPlayer.h; sourceTree = "<group>"; };
+		1F44E1BD21106F0500B74D4D /* test.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = test.mp3; sourceTree = "<group>"; };
 		1FE7B46D20EDC29F008C8EEC /* HFAVDecoder.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HFAVDecoder.h; sourceTree = "<group>"; };
 		1FE7B46E20EDC29F008C8EEC /* HFAVDecoder.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HFAVDecoder.m; sourceTree = "<group>"; };
 		1FE7B47820EE2543008C8EEC /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
@@ -125,9 +138,22 @@
 			isa = PBXGroup;
 			children = (
 				1FE7B47C20EE2A17008C8EEC /* test.mp4 */,
+				1F44E1B1211042D300B74D4D /* test1.mp4 */,
 				1F24F69E20ECBD35003DCD82 /* lena.png */,
+				1F44E1BD21106F0500B74D4D /* test.mp3 */,
 			);
 			path = Resource;
+			sourceTree = "<group>";
+		};
+		1F44E1B32110671300B74D4D /* AudioPlayer */ = {
+			isa = PBXGroup;
+			children = (
+				1F44E1B42110674600B74D4D /* HFAudioPlayer.h */,
+				1F44E1B52110674600B74D4D /* HFAudioPlayer.m */,
+				1F44E1BB21106D4500B74D4D /* HIAudioPlayer.h */,
+				1F44E1BA21106D4500B74D4D /* HIAudioPlayer.m */,
+			);
+			path = AudioPlayer;
 			sourceTree = "<group>";
 		};
 		1FE7B46C20EDC230008C8EEC /* Decoder */ = {
@@ -169,6 +195,7 @@
 		D19DE91420DE04140079532A = {
 			isa = PBXGroup;
 			children = (
+				1F44E1B32110671300B74D4D /* AudioPlayer */,
 				1F24F69D20ECBCFD003DCD82 /* Resource */,
 				1F24F68C20EC7B6D003DCD82 /* Lib */,
 				D19DE91F20DE04140079532A /* HFAVPlayer */,
@@ -193,6 +220,8 @@
 				D19DE92120DE04140079532A /* AppDelegate.m */,
 				D19DE92320DE04140079532A /* ViewController.h */,
 				D19DE92420DE04140079532A /* ViewController.m */,
+				1F44E1B72110694E00B74D4D /* AudioViewController.h */,
+				1F44E1B82110694E00B74D4D /* AudioViewController.m */,
 				D19DE92620DE04140079532A /* Main.storyboard */,
 				D19DE92920DE04140079532A /* Assets.xcassets */,
 				D19DE92B20DE04140079532A /* LaunchScreen.storyboard */,
@@ -268,6 +297,8 @@
 				D19DE92A20DE04140079532A /* Assets.xcassets in Resources */,
 				D19DE92820DE04140079532A /* Main.storyboard in Resources */,
 				1F24F69F20ECBD35003DCD82 /* lena.png in Resources */,
+				1F44E1BE21106F0500B74D4D /* test.mp3 in Resources */,
+				1F44E1B2211042D300B74D4D /* test1.mp4 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -328,8 +359,10 @@
 			files = (
 				D19DE92520DE04140079532A /* ViewController.m in Sources */,
 				1F0CFF4720ECC69600F3B775 /* HFAVPlayerViewRender+VideoData.m in Sources */,
+				1F44E1B62110674600B74D4D /* HFAudioPlayer.m in Sources */,
 				1F24F68F20EC7BAA003DCD82 /* HFAVPlayer.m in Sources */,
 				1FEA469A2105CD0600EAD85F /* HFAVPlayerVideoRender.mm in Sources */,
+				1F44E1B92110694E00B74D4D /* AudioViewController.m in Sources */,
 				1F24F69520EC7BD7003DCD82 /* HFAVPlayerViewRender.mm in Sources */,
 				1F24F69220EC7BBD003DCD82 /* HFAVPlayerView.m in Sources */,
 				1FE7B46F20EDC29F008C8EEC /* HFAVDecoder.m in Sources */,
@@ -337,6 +370,7 @@
 				1FF44AA921009D50001F2AA1 /* HFAVAudioGraph.m in Sources */,
 				D19DE93020DE04140079532A /* main.m in Sources */,
 				D19DE92220DE04140079532A /* AppDelegate.m in Sources */,
+				1F44E1BC21106D4500B74D4D /* HIAudioPlayer.m in Sources */,
 				1F24F69C20ECBB66003DCD82 /* HFAVPlayerViewRenderMakeTexture.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -480,7 +514,7 @@
 				INFOPLIST_FILE = HFAVPlayer/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.study.pengfei;
+				PRODUCT_BUNDLE_IDENTIFIER = com.pengfei.study;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -500,7 +534,7 @@
 				INFOPLIST_FILE = HFAVPlayer/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.study.pengfei;
+				PRODUCT_BUNDLE_IDENTIFIER = com.pengfei.study;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
