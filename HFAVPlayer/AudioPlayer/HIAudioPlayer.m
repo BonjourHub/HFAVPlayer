@@ -7,11 +7,12 @@
 //
 
 #import "HIAudioPlayer.h"
-
+#import "HIAudioDataManager.h"
 #import <AVFoundation/AVFoundation.h>
 
 @interface HIAudioPlayer ()
 @property (nonatomic, strong)AVPlayer *audioPlayer;
+@property (nonatomic, strong) HIAudioDataManager *dataManager;
 @end
 
 @implementation HIAudioPlayer
@@ -22,6 +23,7 @@
     if (!_audioPlayer)
     {
         _audioPlayer = [[AVPlayer alloc] init];
+        if (@available(iOS 10.0, *)) _audioPlayer.automaticallyWaitsToMinimizeStalling = NO;
         
         [_audioPlayer addObserver:self forKeyPath:@"status" options:NSKeyValueObservingOptionNew context:nil];
         __weak typeof(self) weakSelf = self;
@@ -31,6 +33,15 @@
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(_playerItemDidPlayToEndTimeNotification:) name:AVPlayerItemDidPlayToEndTimeNotification object:nil];
     }
     return _audioPlayer;
+}
+
+- (HIAudioDataManager *)dataManager
+{
+    if (!_dataManager)
+    {
+        _dataManager = [HIAudioDataManager new];
+    }
+    return _dataManager;
 }
 
 #pragma mark - Observer
@@ -141,24 +152,21 @@
 
 - (void)playWithURLString:(NSString *)urlString
 {
-    AVPlayerItem *item = [self playerItemWithURLString:urlString];
+    AVPlayerItem *item = [self.dataManager playerItemWithURLString:urlString];
     [self.audioPlayer replaceCurrentItemWithPlayerItem:item];
     [self _play];
 }
 
-- (AVPlayerItem *)playerItemWithURLString:(NSString *)urlString
-{
-    if (!urlString.length)
-    {
-        return nil;
-    }
-    
-    AVURLAsset *urlAsset = [AVURLAsset assetWithURL:[NSURL URLWithString:urlString]];
-    //    AVAssetResourceLoader *loader = urlAsset.resourceLoader;
-    //    [loader setDelegate:self queue:dispatch_queue_create("loader", nil)];
-    
-    return [AVPlayerItem playerItemWithAsset:urlAsset];
-}
+//- (AVPlayerItem *)playerItemWithURLString:(NSString *)urlString
+//{
+//    if (!urlString.length)
+//    {
+//        return nil;
+//    }
+//
+//    AVURLAsset *urlAsset = [AVURLAsset assetWithURL:[NSURL URLWithString:urlString]];
+//    return [AVPlayerItem playerItemWithAsset:urlAsset];
+//}
 
 - (void)play
 {
@@ -174,12 +182,6 @@
 {
     [self _stop];
 }
-
-#pragma mark - AVAssetResourceLoaderDelegate
-//- (BOOL)resourceLoader:(AVAssetResourceLoader *)resourceLoader shouldWaitForLoadingOfRequestedResource:(AVAssetResourceLoadingRequest *)loadingRequest
-//{
-//    return NO;
-//}
 
 
 
