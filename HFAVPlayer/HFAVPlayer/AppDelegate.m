@@ -9,6 +9,7 @@
 #import "AppDelegate.h"
 #import "ViewController.h"
 #import "AudioViewController.h"
+#import "TestViewController.h"
 
 @interface AppDelegate ()
 
@@ -21,6 +22,7 @@
     // Override point for customization after application launch.
     self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
     self.window.rootViewController = [AudioViewController new];
+//    self.window.rootViewController = [TestViewController new];
     return YES;
 }
 

@@ -17,6 +17,7 @@ NSString *const localScheme = @"audioAsset";
     NSString *_originScheme;
 }
 @property (nonatomic, strong) HIAudioDataDownloader *downloader;
+@property (nonatomic, strong) NSMutableArray *pendingRequests;
 
 @end
 
@@ -39,6 +40,8 @@ NSString *const localScheme = @"audioAsset";
     AVURLAsset *asset = [AVURLAsset assetWithURL:[self _replaceScheme:urlString]];
     [asset.resourceLoader setDelegate:self queue:dispatch_get_main_queue()];//使用子线程
     
+    self.pendingRequests = [NSMutableArray array];
+    
     return [AVPlayerItem playerItemWithAsset:asset];
 }
 
@@ -46,7 +49,13 @@ NSString *const localScheme = @"audioAsset";
 - (BOOL)resourceLoader:(AVAssetResourceLoader *)resourceLoader shouldWaitForLoadingOfRequestedResource:(AVAssetResourceLoadingRequest *)loadingRequest
 {
     [self _handleLoadingRequest:loadingRequest];
+    [self.pendingRequests addObject:loadingRequest];
     return YES;
+}
+
+- (void)resourceLoader:(AVAssetResourceLoader *)resourceLoader didCancelLoadingRequest:(AVAssetResourceLoadingRequest *)loadingRequest
+{
+    [self.pendingRequests removeObject:loadingRequest];
 }
 
 #pragma mark handle
@@ -55,6 +64,8 @@ NSString *const localScheme = @"audioAsset";
     if (loadingRequest.dataRequest.requestsAllDataToEndOfResource)
     {
         HFDebugLog(@"HIAu-新请求");
+//        [self finishLoading:loadingRequest];
+//        [self cancel];
     }
 
     NSUInteger requestOffset = loadingRequest.dataRequest.requestedOffset;
@@ -73,14 +84,32 @@ NSString *const localScheme = @"audioAsset";
                 break;
             case HIAudioDataDownloaderHandleTypeHandleReciveData:
                 [loadingRequest.dataRequest respondWithData:data];
-                [loadingRequest finishLoading];
                 break;
             case HIAudioDataDownloaderHandleTypeResponseError:
+                break;
+            case HIAudioDataDownloaderHandleTypeFinishLoading:
+                [WeakInstance finishLoading:loadingRequest];
+                [WeakInstance cancel];
                 break;
             default:
                 break;
         }
     }];
+}
+
+- (void)cancel
+{
+    [self.downloader cancel];
+}
+
+- (void)finishLoading:(AVAssetResourceLoadingRequest *)loadingRequest
+{
+    HFDebugLog(@"will finish loading");
+    if (!loadingRequest.finished)
+    {
+        HFDebugLog(@"finish loading");
+        [loadingRequest finishLoading];
+    }
 }
 
 #pragma mark - 逻辑处理

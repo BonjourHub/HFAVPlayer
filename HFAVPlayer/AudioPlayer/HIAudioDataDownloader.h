@@ -12,7 +12,7 @@ typedef NS_ENUM(NSUInteger, HIAudioDataDownloaderHandleType) {
     HIAudioDataDownloaderHandleTypeFillContentData,
     HIAudioDataDownloaderHandleTypeHandleReciveData,
     HIAudioDataDownloaderHandleTypeResponseError,
-//    HIAudioDataDownloaderHandleTypeResponseData,
+    HIAudioDataDownloaderHandleTypeFinishLoading,
 };
 
 typedef void(^HIAudioDataDownloaderHandel)(HIAudioDataDownloaderHandleType type, id data);
@@ -20,5 +20,6 @@ typedef void(^HIAudioDataDownloaderHandel)(HIAudioDataDownloaderHandleType type,
 @interface HIAudioDataDownloader : NSObject
 
 + (instancetype)downloaderWithURL:(NSURL *)url RuqestRange:(NSRange)range completionHandle:(HIAudioDataDownloaderHandel)completion;
+- (void)cancel;
 
 @end

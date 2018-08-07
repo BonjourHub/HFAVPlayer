@@ -40,6 +40,12 @@
     [self.dataTask resume];
 }
 
+- (void)cancel
+{
+    [self.dataTask cancel];
+    [self.urlSession invalidateAndCancel];
+}
+
 #pragma mark - getter
 - (NSURLSession *)urlSession
 {
@@ -75,6 +81,7 @@ didReceiveResponse:(NSURLResponse *)response
 didCompleteWithError:(nullable NSError *)error
 {
     if (error && _completion) _completion(HIAudioDataDownloaderHandleTypeResponseError, nil);
+    if (!error && _completion) _completion(HIAudioDataDownloaderHandleTypeFinishLoading, nil);
 }
 
 @end

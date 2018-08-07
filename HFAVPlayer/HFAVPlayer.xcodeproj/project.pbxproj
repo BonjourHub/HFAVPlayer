@@ -20,13 +20,14 @@
 		1F44E1BC21106D4500B74D4D /* HIAudioPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F44E1BA21106D4500B74D4D /* HIAudioPlayer.m */; };
 		1F44E1BE21106F0500B74D4D /* test.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 1F44E1BD21106F0500B74D4D /* test.mp3 */; };
 		1FA16E932114490C0061BAB8 /* HIAudioDataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FA16E922114490C0061BAB8 /* HIAudioDataManager.m */; };
-		1FD2BA7921145FB300F561DA /* HIAudioDataDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FD2BA7821145FB300F561DA /* HIAudioDataDownloader.m */; };
 		1FE7B46F20EDC29F008C8EEC /* HFAVDecoder.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FE7B46E20EDC29F008C8EEC /* HFAVDecoder.m */; };
 		1FE7B47920EE2543008C8EEC /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FE7B47820EE2543008C8EEC /* CoreMedia.framework */; };
 		1FE7B47B20EE254D008C8EEC /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FE7B47A20EE254D008C8EEC /* AVFoundation.framework */; };
 		1FE7B47D20EE2A17008C8EEC /* test.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 1FE7B47C20EE2A17008C8EEC /* test.mp4 */; };
 		1FEA469A2105CD0600EAD85F /* HFAVPlayerVideoRender.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1FEA46992105CD0600EAD85F /* HFAVPlayerVideoRender.mm */; };
 		1FF44AA921009D50001F2AA1 /* HFAVAudioGraph.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FF44AA821009D4F001F2AA1 /* HFAVAudioGraph.m */; };
+		1FFA686C2118544100037A93 /* TestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FFA686B2118544100037A93 /* TestViewController.m */; };
+		1FFA686E211855E800037A93 /* HIAudioDataDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FFA686D211855E800037A93 /* HIAudioDataDownloader.m */; };
 		2CD0B4481785A1DF4D8E9DB4 /* libPods-HFAVPlayer.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C5D6D38729038D51D66C2B83 /* libPods-HFAVPlayer.a */; };
 		D19DE92220DE04140079532A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = D19DE92120DE04140079532A /* AppDelegate.m */; };
 		D19DE92520DE04140079532A /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D19DE92420DE04140079532A /* ViewController.m */; };
@@ -61,7 +62,6 @@
 		1FA16E912114490C0061BAB8 /* HIAudioDataManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HIAudioDataManager.h; sourceTree = "<group>"; };
 		1FA16E922114490C0061BAB8 /* HIAudioDataManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HIAudioDataManager.m; sourceTree = "<group>"; };
 		1FD2BA7721145FB300F561DA /* HIAudioDataDownloader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HIAudioDataDownloader.h; sourceTree = "<group>"; };
-		1FD2BA7821145FB300F561DA /* HIAudioDataDownloader.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HIAudioDataDownloader.m; sourceTree = "<group>"; };
 		1FE7B46D20EDC29F008C8EEC /* HFAVDecoder.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HFAVDecoder.h; sourceTree = "<group>"; };
 		1FE7B46E20EDC29F008C8EEC /* HFAVDecoder.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HFAVDecoder.m; sourceTree = "<group>"; };
 		1FE7B47820EE2543008C8EEC /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
@@ -71,6 +71,9 @@
 		1FEA46992105CD0600EAD85F /* HFAVPlayerVideoRender.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = HFAVPlayerVideoRender.mm; sourceTree = "<group>"; };
 		1FF44AA721009D4F001F2AA1 /* HFAVAudioGraph.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HFAVAudioGraph.h; sourceTree = "<group>"; };
 		1FF44AA821009D4F001F2AA1 /* HFAVAudioGraph.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HFAVAudioGraph.m; sourceTree = "<group>"; };
+		1FFA686A2118544100037A93 /* TestViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TestViewController.h; sourceTree = "<group>"; };
+		1FFA686B2118544100037A93 /* TestViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TestViewController.m; sourceTree = "<group>"; };
+		1FFA686D211855E800037A93 /* HIAudioDataDownloader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HIAudioDataDownloader.m; sourceTree = "<group>"; };
 		BEC4C9516A92E488CD6C95DF /* Pods-HFAVPlayer.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HFAVPlayer.release.xcconfig"; path = "Pods/Target Support Files/Pods-HFAVPlayer/Pods-HFAVPlayer.release.xcconfig"; sourceTree = "<group>"; };
 		C5D6D38729038D51D66C2B83 /* libPods-HFAVPlayer.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-HFAVPlayer.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C745CA1426D7C63E940958BB /* Pods-HFAVPlayer.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HFAVPlayer.debug.xcconfig"; path = "Pods/Target Support Files/Pods-HFAVPlayer/Pods-HFAVPlayer.debug.xcconfig"; sourceTree = "<group>"; };
@@ -161,7 +164,9 @@
 				1FA16E912114490C0061BAB8 /* HIAudioDataManager.h */,
 				1FA16E922114490C0061BAB8 /* HIAudioDataManager.m */,
 				1FD2BA7721145FB300F561DA /* HIAudioDataDownloader.h */,
-				1FD2BA7821145FB300F561DA /* HIAudioDataDownloader.m */,
+				1FFA686D211855E800037A93 /* HIAudioDataDownloader.m */,
+				1FFA686A2118544100037A93 /* TestViewController.h */,
+				1FFA686B2118544100037A93 /* TestViewController.m */,
 			);
 			path = AudioPlayer;
 			sourceTree = "<group>";
@@ -367,13 +372,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1FD2BA7921145FB300F561DA /* HIAudioDataDownloader.m in Sources */,
 				D19DE92520DE04140079532A /* ViewController.m in Sources */,
 				1F0CFF4720ECC69600F3B775 /* HFAVPlayerViewRender+VideoData.m in Sources */,
 				1F44E1B62110674600B74D4D /* HFAudioPlayer.m in Sources */,
 				1F24F68F20EC7BAA003DCD82 /* HFAVPlayer.m in Sources */,
 				1FEA469A2105CD0600EAD85F /* HFAVPlayerVideoRender.mm in Sources */,
 				1F44E1B92110694E00B74D4D /* AudioViewController.m in Sources */,
+				1FFA686C2118544100037A93 /* TestViewController.m in Sources */,
 				1F24F69520EC7BD7003DCD82 /* HFAVPlayerViewRender.mm in Sources */,
 				1FA16E932114490C0061BAB8 /* HIAudioDataManager.m in Sources */,
 				1F24F69220EC7BBD003DCD82 /* HFAVPlayerView.m in Sources */,
@@ -383,6 +388,7 @@
 				D19DE93020DE04140079532A /* main.m in Sources */,
 				D19DE92220DE04140079532A /* AppDelegate.m in Sources */,
 				1F44E1BC21106D4500B74D4D /* HIAudioPlayer.m in Sources */,
+				1FFA686E211855E800037A93 /* HIAudioDataDownloader.m in Sources */,
 				1F24F69C20ECBB66003DCD82 /* HFAVPlayerViewRenderMakeTexture.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
