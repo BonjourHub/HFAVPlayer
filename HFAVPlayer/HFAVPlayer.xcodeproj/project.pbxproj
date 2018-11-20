@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		1F0CFF4720ECC69600F3B775 /* HFAVPlayerViewRender+VideoData.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F0CFF4620ECC69600F3B775 /* HFAVPlayerViewRender+VideoData.m */; };
+		1F1FDE35219EC75300BBD6FF /* HIURLSeesionDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F1FDE34219EC75300BBD6FF /* HIURLSeesionDownloader.m */; };
 		1F24F68F20EC7BAA003DCD82 /* HFAVPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F24F68E20EC7BAA003DCD82 /* HFAVPlayer.m */; };
 		1F24F69220EC7BBD003DCD82 /* HFAVPlayerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F24F69120EC7BBD003DCD82 /* HFAVPlayerView.m */; };
 		1F24F69520EC7BD7003DCD82 /* HFAVPlayerViewRender.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1F24F69420EC7BD7003DCD82 /* HFAVPlayerViewRender.mm */; };
@@ -40,6 +41,8 @@
 /* Begin PBXFileReference section */
 		1F0CFF4520ECC69600F3B775 /* HFAVPlayerViewRender+VideoData.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "HFAVPlayerViewRender+VideoData.h"; sourceTree = "<group>"; };
 		1F0CFF4620ECC69600F3B775 /* HFAVPlayerViewRender+VideoData.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "HFAVPlayerViewRender+VideoData.m"; sourceTree = "<group>"; };
+		1F1FDE33219EC75300BBD6FF /* HIURLSeesionDownloader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HIURLSeesionDownloader.h; sourceTree = "<group>"; };
+		1F1FDE34219EC75300BBD6FF /* HIURLSeesionDownloader.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HIURLSeesionDownloader.m; sourceTree = "<group>"; };
 		1F24F68D20EC7BAA003DCD82 /* HFAVPlayer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HFAVPlayer.h; sourceTree = "<group>"; };
 		1F24F68E20EC7BAA003DCD82 /* HFAVPlayer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HFAVPlayer.m; sourceTree = "<group>"; };
 		1F24F69020EC7BBD003DCD82 /* HFAVPlayerView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HFAVPlayerView.h; sourceTree = "<group>"; };
@@ -111,6 +114,15 @@
 				C5D6D38729038D51D66C2B83 /* libPods-HFAVPlayer.a */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		1F1FDE32219EC69600BBD6FF /* Downloader */ = {
+			isa = PBXGroup;
+			children = (
+				1F1FDE33219EC75300BBD6FF /* HIURLSeesionDownloader.h */,
+				1F1FDE34219EC75300BBD6FF /* HIURLSeesionDownloader.m */,
+			);
+			path = Downloader;
 			sourceTree = "<group>";
 		};
 		1F24F68C20EC7B6D003DCD82 /* Lib */ = {
@@ -210,6 +222,7 @@
 		D19DE91420DE04140079532A = {
 			isa = PBXGroup;
 			children = (
+				1F1FDE32219EC69600BBD6FF /* Downloader */,
 				1F44E1B32110671300B74D4D /* AudioPlayer */,
 				1F24F69D20ECBCFD003DCD82 /* Resource */,
 				1F24F68C20EC7B6D003DCD82 /* Lib */,
@@ -387,6 +400,7 @@
 				1FF44AA921009D50001F2AA1 /* HFAVAudioGraph.m in Sources */,
 				D19DE93020DE04140079532A /* main.m in Sources */,
 				D19DE92220DE04140079532A /* AppDelegate.m in Sources */,
+				1F1FDE35219EC75300BBD6FF /* HIURLSeesionDownloader.m in Sources */,
 				1F44E1BC21106D4500B74D4D /* HIAudioPlayer.m in Sources */,
 				1FFA686E211855E800037A93 /* HIAudioDataDownloader.m in Sources */,
 				1F24F69C20ECBB66003DCD82 /* HFAVPlayerViewRenderMakeTexture.m in Sources */,
