@@ -58,6 +58,7 @@
             NSString *urlString = @"http://www.170mv.com/kw/other.web.rh01.sycdn.kuwo.cn/resource/n3/21/19/3413654131.mp3";
 //            NSString *urlString = [[NSBundle mainBundle] pathForResource:@"test" ofType:@"mp3"];
 //            [[HIAudioPlayer shareInstance] playWithURLString:urlString];
+            
             _sessionDownloader = [HIURLSeesionDownloader new];
             [_sessionDownloader requestWithURLString:urlString];
             

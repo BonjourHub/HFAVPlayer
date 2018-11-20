@@ -12,14 +12,20 @@
 
 #import "HIURLSeesionDownloader.h"
 
-@interface HIURLSeesionDownloader (SessionDelegate)<NSURLSessionDownloadDelegate>
+@interface HIURLSeesionDownloader (SessionDelegate)<NSURLSessionDataDelegate>
 
 @end
 
 @interface HIURLSeesionDownloader ()
 
+{
+    NSInteger _totalLength;
+}
+
 @property (nonatomic, strong) NSURLSession *urlSession;
 @property (nonatomic, strong) NSURLSessionConfiguration *sessionConfiguration;
+
+@property (nonatomic, strong) NSMutableData *data;
 
 @end
 
@@ -47,7 +53,7 @@
 - (void)requestWithURLString:(NSString *)urlString
 {
     
-    NSURLSessionDownloadTask *downloadTask = [self.urlSession downloadTaskWithURL:[NSURL URLWithString:urlString]];
+    NSURLSessionDataTask *downloadTask = [self.urlSession dataTaskWithURL:[NSURL URLWithString:urlString]];
     [downloadTask resume];
     
 }
@@ -56,6 +62,35 @@
 
 @implementation HIURLSeesionDownloader (SessionDelegate)
 
+// 开始下载
+- (void)URLSession:(NSURLSession *)session dataTask:(NSURLSessionDataTask *)dataTask
+didReceiveResponse:(NSHTTPURLResponse *)response
+ completionHandler:(void (^)(NSURLSessionResponseDisposition disposition))completionHandler
+{
+    NSLog(@"开始下载");
+    //允许继续处理服务器响应数据
+    completionHandler(NSURLSessionResponseAllow);
+    
+    //请求文件总大小
+    _totalLength = [response.allHeaderFields[@"Content-Length"] integerValue];
+    self.data = [NSMutableData data];
+}
+
+//下载中
+- (void)URLSession:(NSURLSession *)session dataTask:(NSURLSessionDataTask *)dataTask didReceiveData:(NSData *)data
+{
+    float progress = 1.0 * self.data.length/_totalLength;
+    NSLog(@"下载进度:%.5f%%",progress*100);
+    //接收数据
+    [self.data appendData:data];
+}
+
+- (void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task didCompleteWithError:(NSError *)error
+{
+    NSLog(@"完成 发生错误：%@",error.description);
+}
+
+/*
 //下载过程中
 - (void)URLSession:(NSURLSession *)session downloadTask:(NSURLSessionDownloadTask *)downloadTask didWriteData:(int64_t)bytesWritten totalBytesWritten:(int64_t)totalBytesWritten totalBytesExpectedToWrite:(int64_t)totalBytesExpectedToWrite
 {
@@ -85,5 +120,5 @@
 {
     NSLog(@"完成 发生错误：%@",error.description);
 }
-
+*/
 @end
