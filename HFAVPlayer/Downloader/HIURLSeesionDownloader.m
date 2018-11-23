@@ -12,6 +12,8 @@
 
 #import "HIURLSeesionDownloader.h"
 
+typedef void (^Completion)(NSHTTPURLResponse * _Nonnull, NSData * _Nonnull, NSError * _Nonnull);
+
 @interface HIURLSeesionDownloader (SessionDelegate)<NSURLSessionDataDelegate>
 
 @end
@@ -26,6 +28,8 @@
 @property (nonatomic, strong) NSURLSessionConfiguration *sessionConfiguration;
 
 @property (nonatomic, strong) NSMutableData *data;
+
+@property (nonatomic, copy) Completion completion;
 
 @end
 
@@ -58,6 +62,19 @@
     
 }
 
+- (void)requestWithURLRequest:(NSMutableURLRequest *)request
+{
+    NSURLSessionDataTask *downloadTask = [self.urlSession dataTaskWithRequest:request];
+    [downloadTask resume];
+}
+
+- (void)downloadWithLoadingRequest:(NSMutableURLRequest *)URLRequest reciveDataCompletion:(void (^)(NSHTTPURLResponse * _Nonnull, NSData * _Nonnull, NSError * _Nonnull))completion
+{
+    _completion = completion;
+    [self requestWithURLRequest:URLRequest];
+//    [self requestWithURLString:[URLRequest URL].absoluteString];
+}
+
 @end
 
 @implementation HIURLSeesionDownloader (SessionDelegate)
@@ -74,6 +91,8 @@ didReceiveResponse:(NSHTTPURLResponse *)response
     //请求文件总大小
     _totalLength = [response.allHeaderFields[@"Content-Length"] integerValue];
     self.data = [NSMutableData data];
+    
+    if (_completion) _completion (response, nil, nil);
 }
 
 //下载中
@@ -83,11 +102,13 @@ didReceiveResponse:(NSHTTPURLResponse *)response
     NSLog(@"下载进度:%.5f%%",progress*100);
     //接收数据
     [self.data appendData:data];
+    if (_completion) _completion(nil, data, nil);
 }
 
 - (void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task didCompleteWithError:(NSError *)error
 {
     NSLog(@"完成 发生错误：%@",error.description);
+    if (_completion && error) _completion(nil, nil, error);
 }
 
 /*

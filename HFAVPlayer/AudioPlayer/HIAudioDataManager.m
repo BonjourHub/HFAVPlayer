@@ -10,6 +10,9 @@
 #import "HIAudioDataDownloader.h"
 #import <MobileCoreServices/MobileCoreServices.h>
 
+#import "HIAVAssetResposeResourceLoader.h"
+#import "HIURLSeesionDownloader.h"
+
 NSString *const localScheme = @"audioAsset";
 
 @interface HIAudioDataManager ()<AVAssetResourceLoaderDelegate>
@@ -19,9 +22,14 @@ NSString *const localScheme = @"audioAsset";
 @property (nonatomic, strong) HIAudioDataDownloader *downloader;
 @property (nonatomic, strong) NSMutableArray *pendingRequests;
 
+@property (nonatomic, strong) HIAVAssetResposeResourceLoader *resourceLoader;
+@property (nonatomic, strong) HIURLSeesionDownloader *urlSessionDownloader;
+
 @end
 
 @implementation HIAudioDataManager
+
+#pragma mark - getter
 
 #pragma mark - helper
 - (NSURL *)_replaceScheme:(NSString *)urlString
@@ -38,7 +46,12 @@ NSString *const localScheme = @"audioAsset";
 - (AVPlayerItem *)playerItemWithURLString:(NSString *)urlString
 {
     AVURLAsset *asset = [AVURLAsset assetWithURL:[self _replaceScheme:urlString]];
-    [asset.resourceLoader setDelegate:self queue:dispatch_get_main_queue()];//使用子线程
+    _resourceLoader = [[HIAVAssetResposeResourceLoader alloc] init];
+    _resourceLoader.originURLScheme = _originScheme;
+    
+    _urlSessionDownloader = [[HIURLSeesionDownloader alloc] init];
+    _resourceLoader.resourceDownloader = _urlSessionDownloader;
+    [asset.resourceLoader setDelegate:_resourceLoader queue:dispatch_get_main_queue()];//使用子线程
     
     self.pendingRequests = [NSMutableArray array];
     

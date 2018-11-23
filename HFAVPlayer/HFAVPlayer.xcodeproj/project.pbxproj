@@ -21,6 +21,7 @@
 		1F44E1BC21106D4500B74D4D /* HIAudioPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F44E1BA21106D4500B74D4D /* HIAudioPlayer.m */; };
 		1F44E1BE21106F0500B74D4D /* test.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 1F44E1BD21106F0500B74D4D /* test.mp3 */; };
 		1FA16E932114490C0061BAB8 /* HIAudioDataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FA16E922114490C0061BAB8 /* HIAudioDataManager.m */; };
+		1FA60C5E21A5805F006104E3 /* HIAVAssetResposeResourceLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FA60C5D21A5805F006104E3 /* HIAVAssetResposeResourceLoader.m */; };
 		1FE7B46F20EDC29F008C8EEC /* HFAVDecoder.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FE7B46E20EDC29F008C8EEC /* HFAVDecoder.m */; };
 		1FE7B47920EE2543008C8EEC /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FE7B47820EE2543008C8EEC /* CoreMedia.framework */; };
 		1FE7B47B20EE254D008C8EEC /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FE7B47A20EE254D008C8EEC /* AVFoundation.framework */; };
@@ -64,6 +65,8 @@
 		1F44E1BD21106F0500B74D4D /* test.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = test.mp3; sourceTree = "<group>"; };
 		1FA16E912114490C0061BAB8 /* HIAudioDataManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HIAudioDataManager.h; sourceTree = "<group>"; };
 		1FA16E922114490C0061BAB8 /* HIAudioDataManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HIAudioDataManager.m; sourceTree = "<group>"; };
+		1FA60C5C21A5805F006104E3 /* HIAVAssetResposeResourceLoader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HIAVAssetResposeResourceLoader.h; sourceTree = "<group>"; };
+		1FA60C5D21A5805F006104E3 /* HIAVAssetResposeResourceLoader.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HIAVAssetResposeResourceLoader.m; sourceTree = "<group>"; };
 		1FD2BA7721145FB300F561DA /* HIAudioDataDownloader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HIAudioDataDownloader.h; sourceTree = "<group>"; };
 		1FE7B46D20EDC29F008C8EEC /* HFAVDecoder.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HFAVDecoder.h; sourceTree = "<group>"; };
 		1FE7B46E20EDC29F008C8EEC /* HFAVDecoder.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HFAVDecoder.m; sourceTree = "<group>"; };
@@ -183,6 +186,15 @@
 			path = AudioPlayer;
 			sourceTree = "<group>";
 		};
+		1FA60C5B21A57FC6006104E3 /* ResourceLoader */ = {
+			isa = PBXGroup;
+			children = (
+				1FA60C5C21A5805F006104E3 /* HIAVAssetResposeResourceLoader.h */,
+				1FA60C5D21A5805F006104E3 /* HIAVAssetResposeResourceLoader.m */,
+			);
+			path = ResourceLoader;
+			sourceTree = "<group>";
+		};
 		1FE7B46C20EDC230008C8EEC /* Decoder */ = {
 			isa = PBXGroup;
 			children = (
@@ -222,6 +234,7 @@
 		D19DE91420DE04140079532A = {
 			isa = PBXGroup;
 			children = (
+				1FA60C5B21A57FC6006104E3 /* ResourceLoader */,
 				1F1FDE32219EC69600BBD6FF /* Downloader */,
 				1F44E1B32110671300B74D4D /* AudioPlayer */,
 				1F24F69D20ECBCFD003DCD82 /* Resource */,
@@ -403,6 +416,7 @@
 				1F1FDE35219EC75300BBD6FF /* HIURLSeesionDownloader.m in Sources */,
 				1F44E1BC21106D4500B74D4D /* HIAudioPlayer.m in Sources */,
 				1FFA686E211855E800037A93 /* HIAudioDataDownloader.m in Sources */,
+				1FA60C5E21A5805F006104E3 /* HIAVAssetResposeResourceLoader.m in Sources */,
 				1F24F69C20ECBB66003DCD82 /* HFAVPlayerViewRenderMakeTexture.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
