@@ -125,7 +125,7 @@
         __weak typeof(self) weakSelf = self;
         [self.resourceDownloader downloadWithLoadingRequest:reuquest reciveDataCompletion:^(NSHTTPURLResponse * _Nonnull response, NSData * _Nonnull data, NSError * _Nonnull error)
         {
-            dispatch_async(dispatch_get_main_queue(), ^{
+//            dispatch_async(dispatch_get_main_queue(), ^{
                 _error = error;
                 if (response) _response = response;
                 if (data) [weakSelf.data appendData:data];
@@ -135,7 +135,7 @@
                     [self _processFillData];
                 
                 // TODO 写缓存文件
-            });
+//            });
         }];
     }
 }
