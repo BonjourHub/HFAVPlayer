@@ -54,6 +54,7 @@
         case 1001:
         {
 //            [[HIAudioPlayer shareInstance] play];
+//            NSString *urlString = @"http://download.lingyongqian.cn/music/AdagioSostenuto.mp3";
 //            NSString *urlString = @"http://download.lingyongqian.cn/music/ForElise.mp3";
             NSString *urlString = @"http://www.170mv.com/kw/other.web.rh01.sycdn.kuwo.cn/resource/n3/21/19/3413654131.mp3";
 //            NSString *urlString = [[NSBundle mainBundle] pathForResource:@"test" ofType:@"mp3"];
