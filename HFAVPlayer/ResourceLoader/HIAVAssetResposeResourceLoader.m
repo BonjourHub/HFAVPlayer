@@ -211,6 +211,8 @@
      */
     [loadingRequest.dataRequest respondWithData:readData];
     
+    NSLog(@"Loader Assistanter. Did Fill Data <requestedOffset:%lld, currentOffset:%lld, requestedLength:%ld>",loadingRequest.dataRequest.requestedOffset, loadingRequest.dataRequest.currentOffset, loadingRequest.dataRequest.requestedLength);
+    
     // 通知当前LoadingRequest 你要的数据已经全部响应完毕
     if (loadingRequest.dataRequest.currentOffset >= (loadingRequest.dataRequest.requestedOffset + loadingRequest.dataRequest.requestedLength)) {
         [loadingRequest finishLoading];
