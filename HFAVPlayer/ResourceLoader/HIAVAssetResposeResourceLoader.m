@@ -194,16 +194,16 @@
     if (!loadingRequest) return NO;
     
     // 数据不够
-    if (self.data.length <= loadingRequest.dataRequest.requestedOffset) return NO;
+    if (self.data.length <= loadingRequest.dataRequest.currentOffset) return NO;
     
     /**
      * 两种情况：
      * 1.self.data 请求慢，数据不够，只能响应需要的一部分数据，则响应已有的部分
      * 2.self.data 请求快，数据超过本次需要响应的长度，则响应requestedLength长度
      */
-    NSUInteger canReadLength = self.data.length - loadingRequest.dataRequest.requestedOffset;
+    NSUInteger canReadLength = self.data.length - loadingRequest.dataRequest.currentOffset;
     NSUInteger responseLength = MIN(canReadLength, loadingRequest.dataRequest.requestedLength);
-    NSData *readData = [self.data subdataWithRange:NSMakeRange(loadingRequest.dataRequest.requestedOffset, responseLength)];
+    NSData *readData = [self.data subdataWithRange:NSMakeRange(loadingRequest.dataRequest.currentOffset, responseLength)];
     NSLog(@"Loader Assistanter. canReadLength:%ld responseLength:%ld",canReadLength, responseLength);
     /**
      * respondWithData 响应数据必须和对应的loadingRequest请求需要的数据匹配
