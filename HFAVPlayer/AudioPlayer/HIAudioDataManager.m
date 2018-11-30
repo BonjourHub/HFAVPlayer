@@ -45,6 +45,7 @@ NSString *const localScheme = @"audioAsset";
 #pragma mark - public
 - (AVPlayerItem *)playerItemWithURLString:(NSString *)urlString
 {
+//    AVURLAsset *asset = [AVURLAsset assetWithURL:[NSURL URLWithString:urlString]];
     AVURLAsset *asset = [AVURLAsset assetWithURL:[self _replaceScheme:urlString]];
     _resourceLoader = [[HIAVAssetResposeResourceLoader alloc] init];
     _resourceLoader.originURLScheme = _originScheme;

@@ -138,6 +138,18 @@
     
 }
 
+- (void)seekToProgress:(float)progress
+{
+    float time = progress * CMTimeGetSeconds(self.audioPlayer.currentItem.duration);
+    HFDebugLog(@"drag progress:%.2f",time);
+    
+    [self.audioPlayer seekToTime:CMTimeMakeWithSeconds(time, NSEC_PER_SEC)];
+//    [self.audioPlayer seekToTime:CMTimeMake(time, self.audioPlayer.currentItem.currentTime.timescale) toleranceBefore:kCMTimeZero toleranceAfter:kCMTimeZero];
+//    [self.audioPlayer seekToTime:CMTimeMake(time, NSEC_PER_SEC) completionHandler:^(BOOL finished) {
+//        [self.audioPlayer play];
+//    }];
+}
+
 #pragma mark - Public
 + (instancetype)shareInstance
 {

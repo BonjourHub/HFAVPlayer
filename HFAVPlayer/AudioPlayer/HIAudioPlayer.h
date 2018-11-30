@@ -15,5 +15,6 @@
 
 - (void)play;
 - (void)pause;
+- (void)seekToProgress:(float)progress;
 
 @end

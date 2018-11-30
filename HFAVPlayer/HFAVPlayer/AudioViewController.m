@@ -20,6 +20,8 @@
     AVPlayer *_player;
     
     HIURLSeesionDownloader *_sessionDownloader;
+    
+    UISlider *_slider;
 }
 
 @end
@@ -38,12 +40,20 @@
     _playButton.tag = 1001;
     [self.view addSubview:_playButton];
     
+    _slider = [[UISlider alloc] init];
+    _slider.backgroundColor = [UIColor grayColor];
+    _slider.minimumValue = 0;
+    _slider.maximumValue = 100;
+    [_slider addTarget:self action:@selector(_sliderAction:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:_slider];
 }
 
 - (void)viewDidLayoutSubviews
 {
     [super viewDidLayoutSubviews];
     _playButton.frame = CGRectMake(20, 100, 40, 30);
+    
+    _slider.frame = CGRectMake(20, 500, 300, 30);
 }
 
 #pragma mark - action
@@ -71,6 +81,13 @@
         default:
             break;
     }
+}
+
+- (void)_sliderAction:(UISlider *)slider
+{
+    HFDebugLog(@"slider:%.2f %.2f %.2f",slider.value, slider.minimumValue, slider.maximumValue);
+    
+    [[HIAudioPlayer shareInstance] seekToProgress:slider.value/slider.maximumValue];
 }
 
 - (void)didReceiveMemoryWarning {

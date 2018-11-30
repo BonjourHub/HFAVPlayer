@@ -18,7 +18,7 @@ NS_ASSUME_NONNULL_BEGIN
  发起网络请求，获取数据资源
 
  @param URLRequest 网络请求对象
- @param completion 数据回调,data-数据片段
+ @param completion 数据回调,data-数据片段连续回调
  */
 - (void)downloadWithLoadingRequest:(NSMutableURLRequest *)URLRequest reciveDataCompletion:(void(^)(NSHTTPURLResponse *response, NSData *data, NSError *error))completion;
 
